@@ -1,0 +1,163 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+#cards {
+  display: flex;
+  margin-top: 3rem;
+  justify-content: center;
+}
+
+.card {
+  display: flex;
+  background-color: var(--card-color);
+  height: 450px;
+  width: 380px;
+  border: solid 3px black;
+  border-radius: 5%;
+  margin: 10px;
+}
+
+.row {
+  height: 30px;
+}
+
+.types {
+  width: 20%;
+  height: 100%;
+  margin-left: 40px;
+}
+
+.type-pic {
+  width: 30px;
+  height: 30px;
+}
+
+.thumbnail {
+  margin: 5px auto;
+  width: 90%;
+  height: 200px;
+  background-color: rgb(138, 138, 138);
+  border: solid black 2px;
+}
+
+.evo-chain {
+  margin: auto;
+  align-items: center;
+  width: fit-content;
+}
+
+.evo-pic {
+  padding: 0px;
+  height: 55px;
+}
+
+.arrow {
+  padding: 0px;
+  height: 60px;
+}
+
+.evo-level-1 {
+  position: absolute;
+  color: white;
+  left: 80px;
+  top: 262px;
+  font-size: 14px;
+}
+
+.evo-level-2 {
+  position: absolute;
+  color: white;
+  left: 220px;
+  top: 262px;
+  font-size: 14px;
+}
+
+.abilities {
+  justify-content: center;
+}
+
+.ability-name {
+  width: fit-content;
+  margin-top: 25px;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 14px;
+  padding: 0;
+}
+
+.ability {
+  display: inline-flex;
+  width: auto;
+  flex: none;
+  margin-top: 25px;
+  font-size: 14px;
+  border: solid 1px black;
+}
+
+.stats {
+  height: 120px;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.stat-word {
+  width: fit-content;
+  font-size: 18px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.stat-text {
+  font-size: 16px;
+}
+
+.stat-bar {
+  height: 100%;
+  margin-right: auto;
+  margin-left: 30px;
+}
+
+.stat {
+  height: 18px;
+  margin-bottom: 1px;
+}
+
+.stat-num {
+  font-size: 12px;
+  position: absolute;
+  margin-left: 70px;
+  margin-top: 0;
+  font-weight: bold;
+}
+
+.hp-bar {
+  background-color: var(--hp-bar);
+  width: calc(var(--hp) * 0.5pt);
+}
+
+.att-bar {
+  background-color: var(--att-bar);
+  width: calc(var(--att) * 0.5pt);
+}
+
+.def-bar {
+  background-color: var(--def-bar);
+  width: calc(var(--def) * 0.5pt);
+}
+
+.spatt-bar {
+  background-color: var(--spdef-bar);
+  width: calc(var(--spatt) * 0.5pt);
+}
+
+.spdef-bar {
+  background-color: var(--spatt-bar);
+  width: calc(var(--spdef) * 0.5pt);
+}
+
+.speed-bar {
+  background-color: var(--speed-bar);
+  width: calc(var(--speed) * 0.5pt);
+}
