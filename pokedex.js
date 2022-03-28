@@ -16,7 +16,11 @@ const grassType = 'rgb(192, 228, 181)',
   psychicType = 'rgb(210,126,139)',
   ghostType = 'rgb(120,63,134)',
   dragonType = 'rgb(49,105,185)',
-  iceType = 'rgb(154,218,235)';
+  iceType = 'rgb(154,218,235)',
+  poisonType = 'rgb(121,106,166)',
+  darkType = 'rgb(132,114,104)',
+  steelType = 'rgb(147,148,158)',
+  fairyType = 'rgb(231,177,233)';
 
 // Stat Bar Colors
 const lt55 = 'rgb(212, 118, 17)',
@@ -31,6 +35,19 @@ const lt55 = 'rgb(212, 118, 17)',
   gt130 = 'rgb(43,212,17)';
 let test = [];
 
+function getBarColor(stat) {
+  if (stat < 55) return lt55;
+  if (stat < 65) return lt65;
+  if (stat < 75) return lt75;
+  if (stat < 85) return lt85;
+  if (stat < 95) return lt95;
+  if (stat < 100) return lt100;
+  if (stat < 110) return lt110;
+  if (stat < 120) return lt120;
+  if (stat < 130) return lt130;
+  return gt130;
+}
+
 class pokeStats {
   constructor(id, color, stats) {
     this.id = id;
@@ -43,144 +60,12 @@ class pokeStats {
     this.speed = stats.speed;
 
     // Set Colors of stat bars
-
-    // HP Bar
-    if (this.hp < 55) {
-      this.hpBar = lt55;
-    } else if (this.hp < 65) {
-      this.hpBar = lt65;
-    } else if (this.hp < 75) {
-      this.hpBar = lt75;
-    } else if (this.hp < 85) {
-      this.hpBar = lt85;
-    } else if (this.hp < 95) {
-      this.hpBar = lt95;
-    } else if (this.hp < 100) {
-      this.hpBar = lt100;
-    } else if (this.hp < 110) {
-      this.hpBar = lt110;
-    } else if (this.hp < 120) {
-      this.hpBar = lt120;
-    } else if (this.hp > 130) {
-      this.hpBar = lt130;
-    } else if (this.hp >= 130) {
-      this.hpBar = gt130;
-    }
-
-    // Att Bar
-    if (this.att < 55) {
-      this.attBar = lt55;
-    } else if (this.att < 65) {
-      this.attBar = lt65;
-    } else if (this.att < 75) {
-      this.attBar = lt75;
-    } else if (this.att < 85) {
-      this.attBar = lt85;
-    } else if (this.att < 95) {
-      this.attBar = lt95;
-    } else if (this.att < 100) {
-      this.attBar = lt100;
-    } else if (this.att < 110) {
-      this.attBar = lt110;
-    } else if (this.att < 120) {
-      this.attBar = lt120;
-    } else if (this.att > 130) {
-      this.attBar = lt130;
-    } else if (this.att >= 130) {
-      this.attBar = gt130;
-    }
-
-    // Def Bar
-    if (this.def < 55) {
-      this.defBar = lt55;
-    } else if (this.def < 65) {
-      this.defBar = lt65;
-    } else if (this.def < 75) {
-      this.defBar = lt75;
-    } else if (this.def < 85) {
-      this.defBar = lt85;
-    } else if (this.def < 95) {
-      this.defBar = lt95;
-    } else if (this.def < 100) {
-      this.defBar = lt100;
-    } else if (this.def < 110) {
-      this.defBar = lt110;
-    } else if (this.def < 120) {
-      this.defBar = lt120;
-    } else if (this.def > 130) {
-      this.defBar = lt130;
-    } else if (this.def >= 130) {
-      this.defBar = gt130;
-    }
-
-    // Sp Att Bar
-    if (this.spAtt < 55) {
-      this.spAttBar = lt55;
-    } else if (this.spAtt < 65) {
-      this.spAttBar = lt65;
-    } else if (this.spAtt < 75) {
-      this.spAttBar = lt75;
-    } else if (this.spAtt < 85) {
-      this.spAttBar = lt85;
-    } else if (this.spAtt < 95) {
-      this.spAttBar = lt95;
-    } else if (this.spAtt < 100) {
-      this.spAttBar = lt100;
-    } else if (this.spAtt < 110) {
-      this.spAttBar = lt110;
-    } else if (this.spAtt < 120) {
-      this.spAttBar = lt120;
-    } else if (this.spAtt > 130) {
-      this.spAttBar = lt130;
-    } else if (this.spAtt >= 130) {
-      this.spAttBar = gt130;
-    }
-
-    // Sp Def Bar
-    if (this.spDef < 55) {
-      this.spDefBar = lt55;
-    } else if (this.spDef < 65) {
-      this.spDefBar = lt65;
-    } else if (this.spDef < 75) {
-      this.spDefBar = lt75;
-    } else if (this.spDef < 85) {
-      this.spDefBar = lt85;
-    } else if (this.spDef < 95) {
-      this.spDefBar = lt95;
-    } else if (this.spDef < 100) {
-      this.spDefBar = lt100;
-    } else if (this.spDef < 110) {
-      this.spDefBar = lt110;
-    } else if (this.spDef < 120) {
-      this.spDefBar = lt120;
-    } else if (this.spDef > 130) {
-      this.spDefBar = lt130;
-    } else if (this.spDef >= 130) {
-      this.spDefBar = gt130;
-    }
-
-    // Speed Bar
-    if (this.speed < 55) {
-      this.speedBar = lt55;
-    } else if (this.speed < 65) {
-      this.speedBar = lt65;
-    } else if (this.speed < 75) {
-      this.speedBar = lt75;
-    } else if (this.speed < 85) {
-      this.speedBar = lt85;
-    } else if (this.speed < 95) {
-      this.speedBar = lt95;
-    } else if (this.speed < 100) {
-      this.speedBar = lt100;
-    } else if (this.speed < 110) {
-      this.speedBar = lt110;
-    } else if (this.speed < 120) {
-      this.speedBar = lt120;
-    } else if (this.speed > 130) {
-      this.speedBar = lt130;
-    } else if (this.speed >= 130) {
-      this.speedBar = gt130;
-    }
+    this.hpBar = getBarColor(this.hp);
+    this.attBar = getBarColor(this.att);
+    this.defBar = getBarColor(this.def);
+    this.spAttBar = getBarColor(this.spAtt);
+    this.spDefBar = getBarColor(this.spDef);
+    this.speedBar = getBarColor(this.speed);
   }
 
   getString() {
@@ -270,52 +155,30 @@ function getPic(pokemon) {
   return pokemon.sprites.other['official-artwork'].front_default;
 }
 
+function getBgColor(type) {
+  if (type == 'grass') return grassType;
+  if (type == 'fire') return fireType;
+  if (type == 'water') return waterType;
+  if (type == 'bug') return bugType;
+  if (type == 'normal') return normalType;
+  if (type == 'flying') return flyingType;
+  if (type == 'ghost') return ghostType;
+  if (type == 'psychic') return psychicType;
+  if (type == 'dark') return darkType;
+  if (type == 'poison') return poisonType;
+  if (type == 'electric') return electricType;
+  if (type == 'fairy') return fairyType;
+  if (type == 'rock') return rockType;
+  if (type == 'ground') return groundType;
+  if (type == 'steel') return steelType;
+  if (type == 'ice') return iceType;
+  if (type == 'dragon') return dragonType;
+  if (type == 'fighting') return fightingType;
+}
+
 function addCSS(pokemon) {
   let style = document.createElement('style');
-  let bgColor = '';
-  switch (pokemon.types.t1.name) {
-    case 'grass':
-      bgColor = grassType;
-      break;
-    case 'fire':
-      bgColor = fireType;
-      break;
-    case 'water':
-      bgColor = waterType;
-      break;
-    case 'bug':
-      bgColor = bugType;
-      break;
-    case 'normal':
-      bgColor = normalType;
-      break;
-    case 'electric':
-      bgColor = electricType;
-      break;
-    case 'ground':
-      bgColor = groundType;
-      break;
-    case 'rock':
-      bgColor = rockType;
-      break;
-    case 'fighting':
-      bgColor = fightingType;
-      break;
-    case 'psychic':
-      bgColor = psychicType;
-      break;
-    case 'ghost':
-      bgColor = ghostType;
-      break;
-    case 'dragon':
-      bgColor = dragonType;
-      break;
-    case 'ice':
-      bgColor = iceType;
-      break;
-    default:
-      bgColor = grassType;
-  }
+  let bgColor = getBgColor(pokemon.types.t1.name);
   let css = new pokeStats(pokemon.id, bgColor, pokemon.stats);
   style.textContent = css.getString();
   let head = document.head;
@@ -618,8 +481,43 @@ function removeAllChildNodes(parent) {
   }
 }
 
+// Retrieves the range for each generation of pokemon
+function getGenRange(gen) {
+  if (gen == 'gen1') return [1, 151];
+  if (gen == 'gen2') return [152, 251];
+  if (gen == 'gen3') return [252, 386];
+  if (gen == 'gen4') return [387, 493];
+  if (gen == 'gen5') return [494, 649];
+  if (gen == 'gen6') return [650, 721];
+  if (gen == 'gen7') return [722, 809];
+  if (gen == 'gen8') return [810, 898];
+  return [1, 905];
+}
+
+// Creates the buttons that will populate the page with the pokemon
+// of the selected generation
+function createGenBtns() {
+  for (let i = 1; i < 9; i++) {
+    let pokes = [];
+    let gen = `gen${i}`;
+    let range = getGenRange(gen);
+    let id = `${gen}-btn`;
+    let genBtn = document.getElementById(id);
+    genBtn.addEventListener('click', function () {
+      removeAllChildNodes(document.getElementById('cards'));
+      getPokemon(range, pokes).then(function () {
+        sortArr(pokes);
+        for (let i = 0; i < pokes.length; i++) {
+          console.log(pokes[i].name);
+          createCard(pokes[i]);
+        }
+      });
+    });
+  }
+}
+
 document.getElementById('test-button').addEventListener('click', function () {
-  getPokemon([1, 151], test).then(function () {
+  getPokemon([1, 500], test).then(function () {
     sortArr(test);
     console.log(test);
     for (let i = 0; i < test.length; i++) {
@@ -629,25 +527,16 @@ document.getElementById('test-button').addEventListener('click', function () {
   });
 });
 
-document.getElementById('gen1-btn').addEventListener('click', function () {
-  getPokemon([1, 151], test).then(function () {
-    sortArr(test);
-    console.log(test);
-    for (let i = 0; i < test.length; i++) {
-      console.log(test[i].name);
-      createCard(test[i]);
-    }
-  });
-});
-
-document.getElementById('gen2-btn').addEventListener('click', function () {
-  let test = [];
+document.getElementById('pokedex-btn').addEventListener('click', function () {
+  let pokes = [];
   removeAllChildNodes(document.getElementById('cards'));
-  getPokemon([152, 251], test).then(function () {
-    sortArr(test);
-    for (let i = 0; i < test.length; i++) {
-      console.log(test[i].name);
-      createCard(test[i]);
+  getPokemon([1, 898], pokes).then(function () {
+    sortArr(pokes);
+    for (let i = 0; i < pokes.length; i++) {
+      console.log(pokes[i].name);
+      createCard(pokes[i]);
     }
   });
 });
+
+createGenBtns();
