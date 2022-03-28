@@ -9,7 +9,7 @@ const grassType = 'rgb(192, 228, 181)',
   bugType = 'rgb(123,154,86)',
   normalType = 'rgb(185,192,228)',
   flyingType = 'rgb(168,187,242)',
-  electricType = 'rgb(217,217,183)',
+  electricType = 'rgb(252,205,64)',
   groundType = 'rgb(201,166,118)',
   rockType = 'rgb(138,78,32)',
   fightingType = 'rgb(171,106,114)',
@@ -68,7 +68,7 @@ class pokeStats {
     this.speedBar = getBarColor(this.speed);
   }
 
-  getString() {
+  getStyleContent() {
     return `#id-${this.id} {
       --card-color: ${this.color};
       --hp: ${this.hp};
@@ -123,7 +123,7 @@ function getEvoChain(species) {
 
 async function getPokemon(range, arr) {
   for (let id = range[0]; id <= range[1]; id++) {
-    getJSON(apiPrefix + `pokemon/${id}`).then((pokemon) => {
+    await getJSON(apiPrefix + `pokemon/${id}`).then((pokemon) => {
       let entry = {
         id: id,
         name: pokemon.name,
@@ -180,7 +180,7 @@ function addCSS(pokemon) {
   let style = document.createElement('style');
   let bgColor = getBgColor(pokemon.types.t1.name);
   let css = new pokeStats(pokemon.id, bgColor, pokemon.stats);
-  style.textContent = css.getString();
+  style.textContent = css.getStyleContent();
   let head = document.head;
   head.appendChild(style);
 }
@@ -481,6 +481,12 @@ function removeAllChildNodes(parent) {
   }
 }
 
+function clearArray(arr) {
+  while (arr.length > 0) {
+    arr.pop();
+  }
+}
+
 // Retrieves the range for each generation of pokemon
 function getGenRange(gen) {
   if (gen == 'gen1') return [1, 151];
@@ -496,7 +502,7 @@ function getGenRange(gen) {
 
 // Creates the buttons that will populate the page with the pokemon
 // of the selected generation
-function createGenBtns() {
+async function createGenBtns() {
   for (let i = 1; i < 9; i++) {
     let pokes = [];
     let gen = `gen${i}`;
@@ -505,6 +511,7 @@ function createGenBtns() {
     let genBtn = document.getElementById(id);
     genBtn.addEventListener('click', function () {
       removeAllChildNodes(document.getElementById('cards'));
+      clearArray(pokes);
       getPokemon(range, pokes).then(function () {
         sortArr(pokes);
         for (let i = 0; i < pokes.length; i++) {
@@ -516,27 +523,11 @@ function createGenBtns() {
   }
 }
 
-document.getElementById('test-button').addEventListener('click', function () {
-  getPokemon([1, 500], test).then(function () {
-    sortArr(test);
-    console.log(test);
-    for (let i = 0; i < test.length; i++) {
-      console.log(test[i].name);
-      createCard(test[i]);
-    }
-  });
-});
-
-document.getElementById('pokedex-btn').addEventListener('click', function () {
-  let pokes = [];
-  removeAllChildNodes(document.getElementById('cards'));
-  getPokemon([1, 898], pokes).then(function () {
-    sortArr(pokes);
-    for (let i = 0; i < pokes.length; i++) {
-      console.log(pokes[i].name);
-      createCard(pokes[i]);
-    }
-  });
-});
-
 createGenBtns();
+
+getPokemon([1, 898], test).then(function () {
+  sortArr(test);
+  for (let i = 0; i < test.length; i++) {
+    createCard(test[i]);
+  }
+});

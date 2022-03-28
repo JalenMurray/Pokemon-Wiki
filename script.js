@@ -46,12 +46,3 @@ function createCard(pokemon) {
   card.appendChild(thumbnail);
   document.getElementById('cards').appendChild(card);
 }
-
-document.getElementById('gen1-btn').addEventListener('click', function () {
-  let pokemon = [];
-  getPokemon([1, 151], pokemon);
-  for (let poke of pokemon) {
-    console.log(poke);
-    createCard(poke);
-  }
-});
