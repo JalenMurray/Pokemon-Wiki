@@ -207,19 +207,19 @@ function updateNameType(elem, pokemon) {
 
   // Create Name/ID element
   let name = document.createElement('h5');
-  name.classList.add('name', 'col-7');
+  name.classList.add('name', 'col-9');
   let id = formatID(pokemon.id);
   name.textContent = `#${id} ${capital(pokemon.name)}`;
 
   // Create types Element
   let types = document.createElement('div');
-  types.classList.add('types', 'col');
+  types.classList.add('types', 'col-auto');
 
   // Create Type 1 Image
   let t1 = document.createElement('img');
   t1.classList.add('type-pic');
   t1.alt = pokemon.types.t1.name;
-  t1.src = `images/types/${pokemon.types.t1.name}.png`;
+  t1.src = `../images/types/${pokemon.types.t1.name}.png`;
   types.appendChild(t1);
 
   // Create Type 2 Image if there is 2 types
@@ -227,7 +227,7 @@ function updateNameType(elem, pokemon) {
     let t2 = document.createElement('img');
     t2.classList.add('type-pic');
     t2.alt = pokemon.types.t2.name;
-    t2.src = `images/types/${pokemon.types.t2.name}.png`;
+    t2.src = `../images/types/${pokemon.types.t2.name}.png`;
     types.appendChild(t2);
   }
 
@@ -283,7 +283,7 @@ function updateAbilities(elem, pokemon) {
 
   // Create text elements and add the text to them
   let abilityName = document.createElement('h4');
-  abilityName.classList.add('col-3', 'ability-name');
+  abilityName.classList.add('col-auto', 'ability-name');
   abilityName.textContent = 'Abilities:';
   elem.appendChild(abilityName);
 
@@ -294,9 +294,27 @@ function updateAbilities(elem, pokemon) {
   for (let i = 0; i < len; i++) {
     let ability = document.createElement('h5');
     ability.classList.add('col', 'ability');
+    if (pokemon.abilities[i].is_hidden) ability.classList.add('HA');
     ability.textContent = capital(pokemon.abilities[i].ability.name);
     elem.appendChild(ability);
   }
+}
+
+function createStatRow(stat, num) {
+  let row = document.createElement('div');
+  row.classList.add('row', 'stat');
+  let text = document.createElement('h5');
+  text.classList.add('col-4', 'stat-text');
+  text.textContent = stat;
+  let bar = document.createElement('div');
+  bar.classList.add('col-8', 'container-fluid', 'stat-bar', `${stat.toLowerCase().replace(' ', '')}-bar`);
+  let statNum = document.createElement('p5');
+  statNum.classList.add('stat-num');
+  statNum.textContent = num;
+  row.appendChild(text);
+  row.appendChild(bar);
+  row.appendChild(statNum);
+  return row;
 }
 
 function updateStats(elem, pokemon) {
@@ -313,98 +331,12 @@ function updateStats(elem, pokemon) {
   statBars.classList.add('container-fluid', 'stat=bars', 'col-9');
 
   // Create a Row for each Stat
-  let hpRow = document.createElement('div');
-  hpRow.classList.add('row', 'stat');
-  let attRow = document.createElement('div');
-  attRow.classList.add('row', 'stat');
-  let defRow = document.createElement('div');
-  defRow.classList.add('row', 'stat');
-  let spAttRow = document.createElement('div');
-  spAttRow.classList.add('row', 'stat');
-  let spDefRow = document.createElement('div');
-  spDefRow.classList.add('row', 'stat');
-  let speedRow = document.createElement('div');
-  speedRow.classList.add('row', 'stat');
-
-  // Add the Info to the Stat Rows
-
-  // HP Row
-  let hpText = document.createElement('h5');
-  hpText.classList.add('col-4', 'stat-text');
-  hpText.textContent = 'HP';
-  hpRow.appendChild(hpText);
-  let hpBar = document.createElement('div');
-  hpBar.classList.add('col-8', 'container-fluid', 'stat-bar', 'hp-bar');
-  hpRow.appendChild(hpBar);
-  let hpNum = document.createElement('p5');
-  hpNum.classList.add('stat-num');
-  hpNum.textContent = pokemon.stats.hp;
-  hpRow.appendChild(hpNum);
-
-  // Att Row
-  let attText = document.createElement('h5');
-  attText.classList.add('col-4', 'stat-text');
-  attText.textContent = 'Att';
-  attRow.appendChild(attText);
-  let attBar = document.createElement('div');
-  attBar.classList.add('col-8', 'container-fluid', 'stat-bar', 'att-bar');
-  attRow.appendChild(attBar);
-  let attNum = document.createElement('p5');
-  attNum.classList.add('stat-num');
-  attNum.textContent = pokemon.stats.att;
-  attRow.appendChild(attNum);
-
-  // Def Row
-  let defText = document.createElement('h5');
-  defText.classList.add('col-4', 'stat-text');
-  defText.textContent = 'Def';
-  defRow.appendChild(defText);
-  let defBar = document.createElement('div');
-  defBar.classList.add('col-8', 'container-fluid', 'stat-bar', 'def-bar');
-  defRow.appendChild(defBar);
-  let defNum = document.createElement('p5');
-  defNum.classList.add('stat-num');
-  defNum.textContent = pokemon.stats.def;
-  defRow.appendChild(defNum);
-
-  // Sp Att Row
-  let spAttText = document.createElement('h5');
-  spAttText.classList.add('col-4', 'stat-text');
-  spAttText.textContent = 'Sp Att';
-  spAttRow.appendChild(spAttText);
-  let spAttBar = document.createElement('div');
-  spAttBar.classList.add('col-8', 'container-fluid', 'stat-bar', 'spatt-bar');
-  spAttRow.appendChild(spAttBar);
-  let spAttNum = document.createElement('p5');
-  spAttNum.classList.add('stat-num');
-  spAttNum.textContent = pokemon.stats.spAtt;
-  spAttRow.appendChild(spAttNum);
-
-  // Sp Def Row
-  let spDefText = document.createElement('h5');
-  spDefText.classList.add('col-4', 'stat-text');
-  spDefText.textContent = 'Sp Def';
-  spDefRow.appendChild(spDefText);
-  let spDefBar = document.createElement('div');
-  spDefBar.classList.add('col-8', 'container-fluid', 'stat-bar', 'spdef-bar');
-  spDefRow.appendChild(spDefBar);
-  let spDefNum = document.createElement('p5');
-  spDefNum.classList.add('stat-num');
-  spDefNum.textContent = pokemon.stats.spDef;
-  spDefRow.appendChild(spDefNum);
-
-  // Speed Row
-  let speedText = document.createElement('h5');
-  speedText.classList.add('col-4', 'stat-text');
-  speedText.textContent = 'Speed';
-  speedRow.appendChild(speedText);
-  let speedBar = document.createElement('div');
-  speedBar.classList.add('col-8', 'container-fluid', 'stat-bar', 'speed-bar');
-  speedRow.appendChild(speedBar);
-  let speedNum = document.createElement('p5');
-  speedNum.classList.add('stat-num');
-  speedNum.textContent = pokemon.stats.speed;
-  speedRow.appendChild(speedNum);
+  let hpRow = createStatRow('HP', pokemon.stats.hp);
+  let attRow = createStatRow('Att', pokemon.stats.att);
+  let defRow = createStatRow('Def', pokemon.stats.def);
+  let spAttRow = createStatRow('SpAtt', pokemon.stats.spAtt);
+  let spDefRow = createStatRow('SpDef', pokemon.stats.spDef);
+  let speedRow = createStatRow('Speed', pokemon.stats.speed);
 
   // Add the Rows to the Stat Bars Containers
   statBars.appendChild(hpRow);

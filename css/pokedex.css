@@ -3,20 +3,10 @@
   margin: 0;
 }
 
-#id-306 {
-  --card-color: rgb(147, 148, 158);
-  --hp: 70;
-  --att: 110;
-  --def: 180;
-  --spatt: 60;
-  --spdef: 60;
-  --speed: 50;
-  --hp-bar: rgb(212, 196, 17);
-  --att-bar: rgb(160, 212, 17);
-  --def-bar: rgb(43, 212, 17);
-  --spatt-bar: rgb(212, 164, 17);
-  --spdef-bar: rgb(212, 164, 17);
-  --speed-bar: rgb(212, 118, 17);
+#cards {
+  display: flex;
+  justify-content: center;
+  height: fit-content;
 }
 
 .card {
@@ -27,17 +17,24 @@
   border: solid 3px black;
   border-radius: 5%;
   margin: 10px;
-  color: black;
 }
 
 .row {
   height: 30px;
 }
 
+.name {
+  width: fit-content;
+  margin-right: auto;
+  margin-left: 18px;
+}
+
 .types {
-  width: 20%;
+  width: fit-content;
   height: 100%;
-  margin-left: 40px;
+  padding: 0;
+  margin-left: auto;
+  margin-right: 25px;
 }
 
 .type-pic {
@@ -47,7 +44,7 @@
 
 .thumbnail {
   margin: 5px auto;
-  width: 90%;
+  width: 285px;
   height: 200px;
   background-color: rgb(138, 138, 138);
   border: solid black 2px;
@@ -87,30 +84,35 @@
 
 .abilities {
   justify-content: center;
+  align-items: center;
+  margin: 10px auto;
+  width: fit-content;
 }
 
 .ability-name {
   width: fit-content;
-  margin-top: 25px;
-  margin-left: 10px;
-  margin-right: 10px;
-  font-size: 14px;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 12px;
   padding: 0;
 }
 
 .ability {
   display: inline-flex;
-  width: auto;
   flex: none;
-  margin-top: 25px;
-  font-size: 14px;
+  width: fit-content;
+  font-size: 12px;
   border: solid 1px black;
+}
+
+.HA {
+  color: rgb(148, 30, 30);
 }
 
 .stats {
   height: 120px;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 0;
 }
 
 .stat-word {
