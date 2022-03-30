@@ -113,9 +113,7 @@ async function getPokemon(range) {
       },
       evoChain: getEvoChain(pokemon.species.url),
     };
-    if (pokemon.types[1]) {
-      entry.types.t2 = pokemon.types[1].type;
-    }
+    if (pokemon.types[1]) entry.types.t2 = pokemon.types[1].type;
     allPokemon.push(entry);
   }
   return allPokemon;
@@ -149,16 +147,23 @@ function getBgColor(type) {
 function addCSS(pokemon) {
   let style = document.createElement('style');
   let bgColor = getBgColor(pokemon.types.t1.name);
-  let css = new pokeStats(pokemon.id, bgColor, pokemon.stats);
-  style.textContent = css.getStyleContent();
-  let head = document.head;
-  head.appendChild(style);
+  let stats = new pokeStats(pokemon.id, bgColor, pokemon.stats);
+  style.textContent = stats.getStyleContent();
+  document.head.appendChild(style);
 }
 
 function formatID(id) {
   if (id < 10) return `00${id}`;
   if (id < 100) return `0${id}`;
   return id;
+}
+
+function createType(typeName) {
+  let type = document.createElement('img');
+  type.classList.add('type-pic');
+  type.alt = typeName;
+  type.src = `../images/types/${typeName}.png`;
+  return type;
 }
 
 function updateNameType(elem, pokemon) {
@@ -174,19 +179,13 @@ function updateNameType(elem, pokemon) {
   let types = document.createElement('div');
   types.classList.add('types', 'col-auto');
 
-  // Create Type 1 Image
-  let t1 = document.createElement('img');
-  t1.classList.add('type-pic');
-  t1.alt = pokemon.types.t1.name;
-  t1.src = `../images/types/${pokemon.types.t1.name}.png`;
+  // Add the first type
+  let t1 = createType(pokemon.types.t1.name);
   types.appendChild(t1);
 
-  // Create Type 2 Image if there is 2 types
+  // Add the second type if necessary
   if (pokemon.types.t2) {
-    let t2 = document.createElement('img');
-    t2.classList.add('type-pic');
-    t2.alt = pokemon.types.t2.name;
-    t2.src = `../images/types/${pokemon.types.t2.name}.png`;
+    let t2 = createType(pokemon.types.t2.name);
     types.appendChild(t2);
   }
 
@@ -350,22 +349,6 @@ function createCard(pokemon) {
   document.getElementById('cards').appendChild(card);
 }
 
-function sortArr(arr) {
-  for (var i = 0; i < arr.length; i++) {
-    // Last i elements are already in place
-    for (var j = 0; j < arr.length - i - 1; j++) {
-      // Checking if the item at present iteration
-      // is greater than the next iteration
-      if (arr[j].id > arr[j + 1].id) {
-        // If the condition is true then swap them
-        var temp = arr[j];
-        arr[j] = arr[j + 1];
-        arr[j + 1] = temp;
-      }
-    }
-  }
-}
-
 function removeAllChildNodes(parent) {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
@@ -412,12 +395,11 @@ async function createGenBtns() {
 }
 
 async function main() {
+  createGenBtns();
   let allPokemon = await getPokemon([1, 898]);
   allPokemon.forEach(function (n) {
     createCard(n);
   });
 }
-
-createGenBtns();
 
 main();
