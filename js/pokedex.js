@@ -2,50 +2,19 @@
 
 const apiPrefix = 'https://pokeapi.co/api/v2/';
 
-// Card Background Colors
-const grassType = 'rgb(192, 228, 181)',
-  fireType = 'rgb(193,140,135)',
-  waterType = 'rgb(86,149,232)',
-  bugType = 'rgb(123,154,86)',
-  normalType = 'rgb(185,192,228)',
-  flyingType = 'rgb(168,187,242)',
-  electricType = 'rgb(252,205,64)',
-  groundType = 'rgb(201,166,118)',
-  rockType = 'rgb(138,78,32)',
-  fightingType = 'rgb(171,106,114)',
-  psychicType = 'rgb(210,126,139)',
-  ghostType = 'rgb(120,63,134)',
-  dragonType = 'rgb(49,105,185)',
-  iceType = 'rgb(154,218,235)',
-  poisonType = 'rgb(121,106,166)',
-  darkType = 'rgb(132,114,104)',
-  steelType = 'rgb(147,148,158)',
-  fairyType = 'rgb(231,177,233)';
-
-// Stat Bar Colors
-const lt55 = 'rgb(212, 118, 17)',
-  lt65 = 'rgb(212, 164, 17)',
-  lt75 = 'rgb(212,196,17)',
-  lt85 = 'rgb(212,212,17)',
-  lt95 = 'rgb(203,212,17)',
-  lt100 = 'rgb(180, 212, 17)',
-  lt110 = 'rgb(160,212,17)',
-  lt120 = 'rgb(134,212,17)',
-  lt130 = 'rgb(98,212,17)',
-  gt130 = 'rgb(43,212,17)';
 let test = [];
 
 function getBarColor(stat) {
-  if (stat < 55) return lt55;
-  if (stat < 65) return lt65;
-  if (stat < 75) return lt75;
-  if (stat < 85) return lt85;
-  if (stat < 95) return lt95;
-  if (stat < 100) return lt100;
-  if (stat < 110) return lt110;
-  if (stat < 120) return lt120;
-  if (stat < 130) return lt130;
-  return gt130;
+  if (stat < 55) return 'rgb(212, 118, 17)';
+  if (stat < 65) return 'rgb(212, 164, 17)';
+  if (stat < 75) return 'rgb(212,196,17)';
+  if (stat < 85) return 'rgb(212,212,17)';
+  if (stat < 95) return 'rgb(203,212,17)';
+  if (stat < 100) return 'rgb(180, 212, 17)';
+  if (stat < 110) return 'rgb(160,212,17)';
+  if (stat < 120) return 'rgb(134,212,17)';
+  if (stat < 130) return 'rgb(98,212,17)';
+  return 'rgb(43,212,17)';
 }
 
 class pokeStats {
@@ -121,34 +90,35 @@ function getEvoChain(species) {
   return evoChain;
 }
 
-async function getPokemon(range, arr) {
+async function getPokemon(range) {
+  let allPokemon = [];
   for (let id = range[0]; id <= range[1]; id++) {
-    await getJSON(apiPrefix + `pokemon/${id}`).then((pokemon) => {
-      let entry = {
-        id: id,
-        name: pokemon.name,
-        speciesURL: pokemon.species.url,
-        thumbnail: pokemon.sprites.other['official-artwork'].front_default,
-        abilities: pokemon.abilities,
-        types: {
-          t1: pokemon.types[0].type,
-        },
-        stats: {
-          hp: pokemon.stats[0].base_stat,
-          att: pokemon.stats[1].base_stat,
-          def: pokemon.stats[2].base_stat,
-          spAtt: pokemon.stats[3].base_stat,
-          spDef: pokemon.stats[4].base_stat,
-          speed: pokemon.stats[5].base_stat,
-        },
-        evoChain: getEvoChain(pokemon.species.url),
-      };
-      if (pokemon.types[1]) {
-        entry.types.t2 = pokemon.types[1].type;
-      }
-      arr.push(entry);
-    });
+    let pokemon = await getJSON(apiPrefix + `pokemon/${id}`);
+    let entry = {
+      id: id,
+      name: pokemon.name,
+      speciesURL: pokemon.species.url,
+      thumbnail: pokemon.sprites.other['official-artwork'].front_default,
+      abilities: pokemon.abilities,
+      types: {
+        t1: pokemon.types[0].type,
+      },
+      stats: {
+        hp: pokemon.stats[0].base_stat,
+        att: pokemon.stats[1].base_stat,
+        def: pokemon.stats[2].base_stat,
+        spAtt: pokemon.stats[3].base_stat,
+        spDef: pokemon.stats[4].base_stat,
+        speed: pokemon.stats[5].base_stat,
+      },
+      evoChain: getEvoChain(pokemon.species.url),
+    };
+    if (pokemon.types[1]) {
+      entry.types.t2 = pokemon.types[1].type;
+    }
+    allPokemon.push(entry);
   }
+  return allPokemon;
 }
 
 function getPic(pokemon) {
@@ -156,24 +126,24 @@ function getPic(pokemon) {
 }
 
 function getBgColor(type) {
-  if (type == 'grass') return grassType;
-  if (type == 'fire') return fireType;
-  if (type == 'water') return waterType;
-  if (type == 'bug') return bugType;
-  if (type == 'normal') return normalType;
-  if (type == 'flying') return flyingType;
-  if (type == 'ghost') return ghostType;
-  if (type == 'psychic') return psychicType;
-  if (type == 'dark') return darkType;
-  if (type == 'poison') return poisonType;
-  if (type == 'electric') return electricType;
-  if (type == 'fairy') return fairyType;
-  if (type == 'rock') return rockType;
-  if (type == 'ground') return groundType;
-  if (type == 'steel') return steelType;
-  if (type == 'ice') return iceType;
-  if (type == 'dragon') return dragonType;
-  if (type == 'fighting') return fightingType;
+  if (type == 'grass') return 'rgb(192, 228, 181)';
+  if (type == 'fire') return 'rgb(193,140,135)';
+  if (type == 'water') return 'rgb(86,149,232)';
+  if (type == 'bug') return 'rgb(123,154,86)';
+  if (type == 'normal') return 'rgb(185,192,228)';
+  if (type == 'flying') return 'rgb(168,187,242)';
+  if (type == 'ghost') return 'rgb(120,63,134)';
+  if (type == 'psychic') return 'rgb(210,126,139)';
+  if (type == 'dark') return 'rgb(132,114,104)';
+  if (type == 'poison') return 'rgb(121,106,166)';
+  if (type == 'electric') return 'rgb(252,205,64)';
+  if (type == 'fairy') return 'rgb(231,177,233)';
+  if (type == 'rock') return 'rgb(138,78,32)';
+  if (type == 'ground') return 'rgb(201,166,118)';
+  if (type == 'steel') return 'rgb(147,148,158)';
+  if (type == 'ice') return 'rgb(154,218,235)';
+  if (type == 'dragon') return 'rgb(49,105,185)';
+  if (type == 'fighting') return 'rgb(171,106,114)';
 }
 
 function addCSS(pokemon) {
@@ -186,20 +156,9 @@ function addCSS(pokemon) {
 }
 
 function formatID(id) {
-  let numDigits = 1;
-  if (id > 10 && id < 100) {
-    numDigits = 2;
-  } else if (id >= 100) {
-    numDigits = 3;
-  }
-
-  if (numDigits == 1) {
-    return `00${id}`;
-  } else if (numDigits == 2) {
-    return `0${id}`;
-  } else {
-    return id;
-  }
+  if (id < 10) return `00${id}`;
+  if (id < 100) return `0${id}`;
+  return id;
 }
 
 function updateNameType(elem, pokemon) {
@@ -441,25 +400,24 @@ async function createGenBtns() {
     let range = getGenRange(gen);
     let id = `${gen}-btn`;
     let genBtn = document.getElementById(id);
-    genBtn.addEventListener('click', function () {
+    genBtn.addEventListener('click', async function () {
       removeAllChildNodes(document.getElementById('cards'));
       clearArray(pokes);
-      getPokemon(range, pokes).then(function () {
-        sortArr(pokes);
-        for (let i = 0; i < pokes.length; i++) {
-          console.log(pokes[i].name);
-          createCard(pokes[i]);
-        }
+      let pokemon = await getPokemon(range);
+      pokemon.forEach(function (n) {
+        createCard(n);
       });
     });
   }
 }
 
+async function main() {
+  let allPokemon = await getPokemon([1, 898]);
+  allPokemon.forEach(function (n) {
+    createCard(n);
+  });
+}
+
 createGenBtns();
 
-getPokemon([1, 898], test).then(function () {
-  sortArr(test);
-  for (let i = 0; i < test.length; i++) {
-    createCard(test[i]);
-  }
-});
+main();

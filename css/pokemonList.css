@@ -1,0 +1,59 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.entry {
+  height: 50px;
+  padding: 0;
+  border: solid grey 4px;
+}
+
+.id {
+  padding: 12.5px 0;
+  text-align: center;
+  font-size: 14px;
+  height: 100%;
+  width: 50px;
+  border-right: solid grey 4px;
+}
+
+.sprite {
+  width: 50px;
+  height: 100%;
+  border-right: solid grey 4px;
+  padding: 0;
+}
+
+.name {
+  padding: 12.5px 10px;
+  text-align: center;
+  font-size: 14px;
+  border-right: solid grey 4px;
+  width: 150px;
+}
+
+.types {
+  width: 160px;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  border-right: solid grey 4px;
+}
+
+.type {
+  padding: 12px;
+  text-align: center;
+  font-size: 18px;
+  height: 100%;
+  width: 65px;
+}
+
+.fire {
+  background-color: rgb(229, 58, 11);
+}
+
+.flying {
+  background-color: rgb(171, 149, 234);
+}
