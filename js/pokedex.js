@@ -1,8 +1,64 @@
 'use strict';
 
 const apiPrefix = 'https://pokeapi.co/api/v2/';
-
 let test = [];
+
+class htmlContent {
+  constructor(content) {
+    this.content = content;
+  }
+}
+
+class htmlAttribute {
+  constructor(name, value) {
+    this.name = name;
+    this.value = value;
+  }
+}
+
+class htmlElement {
+  constructor(type, attributes, content) {
+    this.type = type;
+    this.attributes = attributes;
+    this.content = content;
+  }
+}
+
+function htmlElementPrototypes() {
+  // Returns string for the HTML Content
+  htmlContent.prototype.toString = function () {
+    return this.content.length > 0 ? this.content.join('') : '';
+  };
+
+  // Returns string for an HTML Attributes
+  htmlAttribute.prototype.toString = function () {
+    return `${this.name}="${this.value}"`;
+  };
+
+  // Returns string for the attributes
+  htmlElement.prototype.attString = function () {
+    return this.attributes.length > 0 ? ` ${this.attributes.join(' ')}` : '';
+  };
+
+  // Returns the string for an HTML Element
+  htmlElement.prototype.toString = function () {
+    return `<${this.type}${this.attString()}>${this.content}</${this.type}>`;
+  };
+
+  // Adds classes to the Element
+  htmlElement.prototype.addClass = function (classStr) {
+    let classAdded = false;
+    this.attributes.forEach(function (n) {
+      if (n.name == 'class') {
+        n.value += ` ${classStr}`;
+        classAdded = true;
+      }
+    });
+    if (!classAdded) this.attributes.push(new htmlAttribute('class', classStr));
+  };
+}
+
+htmlElementPrototypes();
 
 function getBarColor(stat) {
   if (stat < 55) return 'rgb(212, 118, 17)';
@@ -144,12 +200,12 @@ function getBgColor(type) {
   if (type == 'fighting') return 'rgb(171,106,114)';
 }
 
-function addCSS(pokemon) {
-  let style = document.createElement('style');
-  let bgColor = getBgColor(pokemon.types.t1.name);
-  let stats = new pokeStats(pokemon.id, bgColor, pokemon.stats);
-  style.textContent = stats.getStyleContent();
-  document.head.appendChild(style);
+function getCSS(pokemon) {
+  let bgColor = getBgColor(pokemon.types.t1.name),
+    stats = new pokeStats(pokemon.id, bgColor, pokemon.stats),
+    styleContent = new htmlContent([stats.getStyleContent()]);
+
+  return new htmlElement('style', [], styleContent);
 }
 
 function formatID(id) {
@@ -159,39 +215,20 @@ function formatID(id) {
 }
 
 function createType(typeName) {
-  let type = document.createElement('img');
-  type.classList.add('type-pic');
-  type.alt = typeName;
-  type.src = `../images/types/${typeName}.png`;
+  let src = new htmlAttribute('src', `../images/types/${typeName}.png`),
+    alt = new htmlAttribute('alt', typeName),
+    classes = new htmlAttribute('class', 'type-pic'),
+    attributes = [src, alt, classes],
+    type = new htmlElement('img', attributes, []);
+
   return type;
 }
 
-function updateNameType(elem, pokemon) {
-  elem.classList.add('row');
+function createTypes(types) {
+  let classes = new htmlAttribute('class', 'col-3 types'),
+    content = new htmlContent(types);
 
-  // Create Name/ID element
-  let name = document.createElement('h5');
-  name.classList.add('name', 'col-9');
-  let id = formatID(pokemon.id);
-  name.textContent = `#${id} ${capital(pokemon.name)}`;
-
-  // Create types Element
-  let types = document.createElement('div');
-  types.classList.add('types', 'col-auto');
-
-  // Add the first type
-  let t1 = createType(pokemon.types.t1.name);
-  types.appendChild(t1);
-
-  // Add the second type if necessary
-  if (pokemon.types.t2) {
-    let t2 = createType(pokemon.types.t2.name);
-    types.appendChild(t2);
-  }
-
-  // Add the Name and Type Elements to the row
-  elem.appendChild(name);
-  elem.appendChild(types);
+  return new htmlElement('div', [classes], content);
 }
 
 function updateEvoChain(elem, pokemon) {
@@ -236,57 +273,81 @@ function updateEvoChain(elem, pokemon) {
   });
 }
 
-function updateAbilities(elem, pokemon) {
-  elem.classList.add('row', 'abilities');
+function createAbility(ability) {
+  let classes = new htmlAttribute('class', 'col ability'),
+    abilityElem = new htmlElement('h5', [classes], new htmlContent([capital(ability.ability.name)]));
 
-  // Create text elements and add the text to them
-  let abilityName = document.createElement('h4');
-  abilityName.classList.add('col-auto', 'ability-name');
-  abilityName.textContent = 'Abilities:';
-  elem.appendChild(abilityName);
+  if (ability.is_hidden) abilityElem.addClass('HA');
 
-  // Get number of abilities
-  let len = pokemon.abilities.length;
-
-  // Create an element for each ability and add it to the element
-  for (let i = 0; i < len; i++) {
-    let ability = document.createElement('h5');
-    ability.classList.add('col', 'ability');
-    if (pokemon.abilities[i].is_hidden) ability.classList.add('HA');
-    ability.textContent = capital(pokemon.abilities[i].ability.name);
-    elem.appendChild(ability);
-  }
+  return abilityElem;
 }
 
-function createStatRow(stat, num) {
-  let row = document.createElement('div');
-  row.classList.add('row', 'stat');
-  let text = document.createElement('h5');
-  text.classList.add('col-4', 'stat-text');
-  text.textContent = stat;
-  let bar = document.createElement('div');
-  bar.classList.add('col-8', 'container-fluid', 'stat-bar', `${stat.toLowerCase().replace(' ', '')}-bar`);
-  let statNum = document.createElement('p5');
-  statNum.classList.add('stat-num');
-  statNum.textContent = num;
-  row.appendChild(text);
-  row.appendChild(bar);
-  row.appendChild(statNum);
-  return row;
+function createStatRow(statName, statNum) {
+  let barClasses = new htmlAttribute(
+      'class',
+      `col-8 container-fluid stat-bar ${statName.toLowerCase().replace(' ', '')}-bar`
+    ),
+    textClasses = new htmlAttribute('class', 'col-4 stat-text'),
+    textContent = new htmlContent([statName]),
+    numClasses = new htmlAttribute('class', 'stat-num'),
+    numContent = new htmlContent([statNum]),
+    bar = new htmlElement('div', [barClasses], []),
+    text = new htmlElement('h5', [textClasses], textContent),
+    num = new htmlElement('p5', [numClasses], numContent),
+    rowClasses = new htmlAttribute('class', 'row stat');
+
+  return new htmlElement('div', [rowClasses], new htmlContent([text, num, bar]));
 }
 
-function updateStats(elem, pokemon) {
-  elem.classList.add('row', 'stats');
+function createNameType(pokemon) {
+  let id = formatID(pokemon.id),
+    nameTypeClasses = new htmlAttribute('class', 'row'),
+    nameClasses = new htmlAttribute('class', 'name col-9'),
+    nameContent = new htmlContent([`#${id} ${capital(pokemon.name)}`]),
+    name = new htmlElement('h5', [nameClasses], nameContent),
+    t1 = createType(pokemon.types.t1.name),
+    t2,
+    typesArr = [t1];
 
+  if (pokemon.types.t2) typesArr.push(createType(pokemon.types.t2.name));
+
+  let types = createTypes(typesArr);
+  return new htmlElement('div', [nameTypeClasses], new htmlContent([name, types]));
+}
+
+function createThumbnail(pokemon) {
+  let thumbnailSrc = new htmlAttribute('src', pokemon.thumbnail),
+    thumbnailAlt = new htmlAttribute('alt', pokemon.name),
+    thumbnailClasses = new htmlAttribute('class', 'thumbnail'),
+    thumbnailAttributes = [thumbnailSrc, thumbnailAlt, thumbnailClasses],
+    thumbnail = new htmlElement('img', thumbnailAttributes, []);
+
+  return thumbnail;
+}
+
+function createAbilities(pokemon) {
+  let a1 = createAbility(pokemon.abilities[0]),
+    a2,
+    aTextClasses = new htmlAttribute('class', 'col-auto ability-name'),
+    aTextContent = new htmlContent(['Abilities']),
+    aText = new htmlElement('h4', [aTextClasses], aTextContent),
+    abilitiesClasses = new htmlAttribute('class', 'row abilities'),
+    abilities;
+
+  if (pokemon.abilities[1]) a2 = createAbility(pokemon.abilities[1]);
+
+  a2
+    ? (abilities = new htmlElement('div', [abilitiesClasses], new htmlContent([aText, a1, a2])))
+    : (abilities = new htmlElement('div', [abilitiesClasses], new htmlContent([aText, a1])));
+
+  return abilities;
+}
+
+function createStats(pokemon) {
   // Create the word Stats Element
-  let statWord = document.createElement('h5');
-  statWord.classList.add('col-2', 'stat-word');
-  statWord.textContent = 'Stats:';
-  elem.appendChild(statWord);
-
-  // Create Stat Bars Container
-  let statBars = document.createElement('div');
-  statBars.classList.add('container-fluid', 'stat=bars', 'col-9');
+  let textContent = new htmlContent(['Stats:']),
+    textClasses = new htmlAttribute('class', 'col-2 stat-word'),
+    text = new htmlElement('h5', [textClasses], textContent);
 
   // Create a Row for each Stat
   let hpRow = createStatRow('HP', pokemon.stats.hp);
@@ -296,57 +357,40 @@ function updateStats(elem, pokemon) {
   let spDefRow = createStatRow('SpDef', pokemon.stats.spDef);
   let speedRow = createStatRow('Speed', pokemon.stats.speed);
 
-  // Add the Rows to the Stat Bars Containers
-  statBars.appendChild(hpRow);
-  statBars.appendChild(attRow);
-  statBars.appendChild(defRow);
-  statBars.appendChild(spAttRow);
-  statBars.appendChild(spDefRow);
-  statBars.appendChild(speedRow);
+  // Create Stat Bars Container
+  let statBarsContent = new htmlContent([hpRow, attRow, defRow, spAttRow, spDefRow, speedRow]),
+    statBarsClasses = new htmlAttribute('class', 'container-fluid stat-bars col-9'),
+    statBars = new htmlElement('div', [statBarsClasses], statBarsContent);
 
-  elem.appendChild(statBars);
+  // Create Stats Container
+  let statContent = new htmlContent([text, statBars]),
+    statClasses = new htmlAttribute('class', 'stats row');
+
+  return new htmlElement('div', [statClasses], statContent);
 }
 
 function createCard(pokemon) {
-  // Create the Card
-  let card = document.createElement('div');
-  card.classList.add('card', 'container', 'col-xs-12', 'col-sm-6', 'col-lg-4', 'col-xl-3');
-  card.id = `id-${pokemon.id}`;
-
-  // Create NameType Row and Populate it
-  let nameType = document.createElement('div');
-  updateNameType(nameType, pokemon);
+  // Create NameType Row
+  let nameType = createNameType(pokemon);
 
   // Create Thumbnail
-  let thumbnail = document.createElement('img');
-  thumbnail.src = pokemon.thumbnail;
-  thumbnail.alt = pokemon.name;
-  thumbnail.classList.add('thumbnail');
+  let thumbnail = createThumbnail(pokemon);
 
-  // // Create EvoChain Row and Populate it
-  // let evoChain = document.createElement('div');
-  // updateEvoChain(evoChain, pokemon);
+  // Create Abilities Row
+  let abilities = createAbilities(pokemon);
 
-  // Create Abilities Row and Populate it
-  let abilities = document.createElement('div');
-  updateAbilities(abilities, pokemon);
+  // Create Stats Row
+  let stats = createStats(pokemon);
+  console.log(stats.toString());
 
-  // Create Stats Row and Populate it
-  let stats = document.createElement('div');
-  updateStats(stats, pokemon);
+  // Create htmlContent that holds all the cards information
+  let cardContent = new htmlContent([nameType, thumbnail, abilities, stats]);
 
-  // Add all the info to the Card
-  card.appendChild(nameType);
-  card.appendChild(thumbnail);
-  // card.appendChild(evoChain);
-  card.appendChild(abilities);
-  card.appendChild(stats);
+  // Create the Card
+  let cardClasses = new htmlAttribute('class', 'card container col-xs-12 col-sm-6 col-lg-4 col-xl-3'),
+    cardId = new htmlAttribute('id', `id-${pokemon.id}`);
 
-  // Add a style entry for the card
-  addCSS(pokemon);
-
-  // Add the Card to the Cards Container
-  document.getElementById('cards').appendChild(card);
+  return new htmlElement('div', [cardClasses, cardId], cardContent);
 }
 
 function removeAllChildNodes(parent) {
@@ -383,23 +427,48 @@ async function createGenBtns() {
     let range = getGenRange(gen);
     let id = `${gen}-btn`;
     let genBtn = document.getElementById(id);
+    let cards = [],
+      css = [];
     genBtn.addEventListener('click', async function () {
       removeAllChildNodes(document.getElementById('cards'));
       clearArray(pokes);
       let pokemon = await getPokemon(range);
       pokemon.forEach(function (n) {
-        createCard(n);
+        cards.push(createCard(n));
+        css.push(getCSS(n));
       });
+      document.head.innerHTML += createHTMLString(css);
+      document.getElementById('cards').innerHTML += createHTMLString(cards);
     });
   }
 }
 
-async function main() {
-  createGenBtns();
-  let allPokemon = await getPokemon([1, 898]);
-  allPokemon.forEach(function (n) {
-    createCard(n);
+function createHTMLString(elems) {
+  let str = '';
+  elems.forEach(function (n) {
+    str += n;
   });
+  return str;
+}
+
+async function main() {
+  let cards = [],
+    css = [];
+  createGenBtns();
+  test = await getPokemon([1, 898]);
+  test.forEach(function (n) {
+    cards.push(createCard(n));
+    css.push(getCSS(n));
+  });
+  document.head.innerHTML += createHTMLString(css);
+  document.getElementById('cards').innerHTML += createHTMLString(cards);
 }
 
 main();
+
+let h1 = new htmlElement('h1', [], new htmlContent(['H1'])),
+  h2 = new htmlElement('h2', [], new htmlContent(['H1'])),
+  img = new htmlElement('img', []),
+  div = new htmlElement('div', [], new htmlContent([h1, h1, h2, img]));
+
+div.toString();
