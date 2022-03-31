@@ -1,48 +1,39 @@
 'use strict';
 
-const apiPrefix = 'https://pokeapi.co/api/v2/';
-let test = {};
-
-// API Caller that returns JSON
-async function getJSON(path) {
-  const response = await fetch(path);
-  const json = await response.json();
-  return json;
-}
-
-async function getPokemon(range, obj) {
-  for (let id = range[0]; id <= range[1]; id++) {
-    getJSON(apiPrefix + `pokemon/${id}`).then((pokemon) => {
-      obj[id] = {
-        id: id,
-        name: pokemon.name,
-        speciesURL: pokemon.species.url,
-        thumbnail: pokemon.sprites.other['official-artwork'].front_default,
-        abilities: pokemon.abilities,
-        types: {
-          t1: pokemon.types[0].type,
-        },
-        stats: {
-          hp: pokemon.stats[0].base_stat,
-          att: pokemon.stats[1].base_stat,
-          def: pokemon.stats[2].base_stat,
-          spAtt: pokemon.stats[3].base_stat,
-          spDef: pokemon.stats[4].base_stat,
-          spd: pokemon.stats[5].base_stat,
-        },
-      };
-      if (pokemon.types[1]) {
-        obj[id].types.t2 = pokemon.types[1].type;
-      }
-    });
+class htmlAttribute {
+  constructor(name, value) {
+    this.name = name;
+    this.value = value;
   }
 }
 
-function createCard(pokemon) {
-  let card = document.createElement('div');
-  let thumbnail = document.createElement('img');
-  thumbnail.source = pokemon.thumbnail;
-  card.classList.add('card');
-  card.appendChild(thumbnail);
-  document.getElementById('cards').appendChild(card);
+htmlAttribute.prototype.toString = function () {
+  return `${this.name}="${this.value}"`;
+};
+
+class htmlElement {
+  constructor(type, attributes, content) {
+    this.type = type;
+    this.attributes = attributes;
+    content ? (this.content = content) : (this.content = '');
+  }
 }
+
+function htmlElementPrototypes() {
+  // Returns string for the attributes
+  htmlElement.prototype.attString = function () {
+    return this.attributes.length > 0 ? ` ${this.attributes.join('')}` : '';
+  };
+
+  // Returns the string for an HTML Element
+  htmlElement.prototype.toString = function () {
+    return `<${this.type}${this.attString()}>${this.content}</${this.type}>`;
+  };
+}
+
+let h1 = new htmlElement('h1', [], 'Testing');
+let div = new htmlElement('div', [new htmlAttribute('class', 'container row')], h1);
+let section = new htmlElement('section', [new htmlAttribute('class', 'bg-light text-dark p-5 text-center')], div);
+
+let sec = document.createElement('section');
+sec.classList.add('bg-light', 'text-dark', 'p-5', 'text-center');
