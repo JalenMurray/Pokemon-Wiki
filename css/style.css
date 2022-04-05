@@ -3,22 +3,6 @@
   margin: 0;
 }
 
-#id-306 {
-  --card-color: rgb(147, 148, 158);
-  --hp: 70;
-  --att: 110;
-  --def: 180;
-  --spatt: 60;
-  --spdef: 60;
-  --speed: 50;
-  --hp-bar: rgb(212, 196, 17);
-  --att-bar: rgb(160, 212, 17);
-  --def-bar: rgb(43, 212, 17);
-  --spatt-bar: rgb(212, 164, 17);
-  --spdef-bar: rgb(212, 164, 17);
-  --speed-bar: rgb(212, 118, 17);
-}
-
 .card {
   display: flex;
   background-color: var(--card-color);

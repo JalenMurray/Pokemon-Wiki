@@ -3,10 +3,40 @@
   margin: 0;
 }
 
+.loading-screen {
+  height: 100vh;
+}
+
+.loader {
+  margin: auto;
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th {
+  text-align: center;
+}
+
 .entry {
   height: 50px;
   padding: 0;
-  border: solid grey 4px;
 }
 
 .id {
@@ -15,13 +45,11 @@
   font-size: 14px;
   height: 100%;
   width: 50px;
-  border-right: solid grey 4px;
 }
 
 .sprite {
   width: 50px;
   height: 100%;
-  border-right: solid grey 4px;
   padding: 0;
 }
 
@@ -29,25 +57,105 @@
   padding: 12.5px 10px;
   text-align: center;
   font-size: 14px;
-  border-right: solid grey 4px;
   width: 150px;
 }
 
 .types {
-  width: 160px;
+  width: 250px;
   height: 100%;
   justify-content: center;
   align-items: center;
-  padding: 0;
-  border-right: solid grey 4px;
+  padding: 12.5px;
+  margin-left: 0;
 }
 
 .type {
-  padding: 12px;
-  text-align: center;
-  font-size: 18px;
   height: 100%;
-  width: 65px;
+  width: 45px;
+  margin: 0px;
+  padding: 0;
+}
+
+.type + .type {
+  margin-left: 7px;
+}
+
+.type-text {
+  font-size: 12px;
+  text-align: center;
+  margin: 0;
+  height: 17px;
+  border-radius: 10%;
+}
+
+.abilities {
+  width: 250px;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  margin-left: 0;
+}
+
+.ability {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.ability + .ability {
+  margin-left: 7px;
+}
+
+.ability-name {
+  font-size: 14px;
+  width: fit-content;
+  display: inline-flex;
+  flex: none;
+  text-align: center;
+}
+
+.ha {
+  color: rgb(247, 134, 134);
+}
+
+.stats {
+  justify-content: center;
+  width: fit-content;
+  margin: 0;
+  padding: 12px;
+}
+
+.stat-num {
+  margin: 0;
+  padding: 12px;
+  width: fit-content;
+  text-align: center;
+  font-size: 14px;
+}
+
+.bug {
+  background-color: rgb(173, 189, 33);
+}
+
+.dark {
+  background-color: rgb(115, 90, 74);
+}
+
+.dragon {
+  background-color: rgb(115, 96, 202);
+}
+
+.electric {
+  background-color: rgb(255, 198, 49);
+}
+
+.fairy {
+  background-color: rgb(247, 181, 247);
+}
+
+.fighting {
+  background-color: rgb(165, 82, 57);
 }
 
 .fire {
@@ -56,4 +164,50 @@
 
 .flying {
   background-color: rgb(171, 149, 234);
+}
+
+.ghost {
+  background-color: rgb(99, 99, 181);
+}
+
+.grass {
+  background-color: rgb(123, 206, 82);
+}
+
+.ground {
+  background-color: rgb(198, 169, 89);
+}
+
+.ice {
+  background-color: rgb(90, 206, 231);
+}
+
+.normal {
+  background-color: rgb(173, 165, 148);
+}
+
+.poison {
+  background-color: rgb(172, 89, 157);
+}
+
+.psychic {
+  background-color: rgb(243, 113, 159);
+}
+
+.rock {
+  background-color: rgb(189, 165, 90);
+}
+
+.steel {
+  background-color: rgb(173, 173, 198);
+}
+
+.water {
+  background-color: rgb(57, 156, 255);
+}
+
+.column-header {
+  font-size: 14px;
+  text-align: center;
+  padding: 12.5px;
 }

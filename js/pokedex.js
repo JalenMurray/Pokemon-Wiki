@@ -127,25 +127,6 @@ function capital(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-function getEvoChain(species) {
-  let evoChain = [];
-  getJSON(species).then((species) => {
-    getJSON(species.evolution_chain.url).then((chain) => {
-      evoChain[0] = [chain.chain.species.name, undefined];
-      if (chain.chain.evolves_to.length != 0) {
-        evoChain[1] = [chain.chain.evolves_to[0].species.name, chain.chain.evolves_to[0].evolution_details[0]];
-        if (chain.chain.evolves_to[0].evolves_to.length != 0) {
-          evoChain[2] = [
-            chain.chain.evolves_to[0].evolves_to[0].species.name,
-            chain.chain.evolves_to[0].evolves_to[0].evolution_details[0],
-          ];
-        }
-      }
-    });
-  });
-  return evoChain;
-}
-
 async function getPokemon(range) {
   let allPokemon = [];
   for (let id = range[0]; id <= range[1]; id++) {
@@ -167,7 +148,6 @@ async function getPokemon(range) {
         spDef: pokemon.stats[4].base_stat,
         speed: pokemon.stats[5].base_stat,
       },
-      evoChain: getEvoChain(pokemon.species.url),
     };
     if (pokemon.types[1]) entry.types.t2 = pokemon.types[1].type;
     allPokemon.push(entry);
@@ -381,7 +361,6 @@ function createCard(pokemon) {
 
   // Create Stats Row
   let stats = createStats(pokemon);
-  console.log(stats.toString());
 
   // Create htmlContent that holds all the cards information
   let cardContent = new htmlContent([nameType, thumbnail, abilities, stats]);
@@ -443,6 +422,16 @@ async function createGenBtns() {
   }
 }
 
+function createBaseHTML(pokemon) {
+  var fs = require('fs');
+
+  var htmlContent = '<html>Whatever</html>';
+
+  fs.writeFile('/my-page.html', htmlContent, (error) => {
+    /* handle error */
+  });
+}
+
 function createHTMLString(elems) {
   let str = '';
   elems.forEach(function (n) {
@@ -461,14 +450,10 @@ async function main() {
     css.push(getCSS(n));
   });
   document.head.innerHTML += createHTMLString(css);
+  let htmlString = createHTMLString(cards);
+
+  document.getElementById('loading').classList.add('d-none');
   document.getElementById('cards').innerHTML += createHTMLString(cards);
 }
 
 main();
-
-let h1 = new htmlElement('h1', [], new htmlContent(['H1'])),
-  h2 = new htmlElement('h2', [], new htmlContent(['H1'])),
-  img = new htmlElement('img', []),
-  div = new htmlElement('div', [], new htmlContent([h1, h1, h2, img]));
-
-div.toString();
