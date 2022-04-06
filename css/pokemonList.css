@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
   margin: 0;
+  font-size: 15px;
 }
 
 .loading-screen {
@@ -34,44 +35,49 @@ th {
   text-align: center;
 }
 
+td {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+}
+
 .entry {
   height: 50px;
   padding: 0;
 }
 
 .id {
-  padding: 12.5px 0;
+  padding: 35px 0;
   text-align: center;
-  font-size: 14px;
   height: 100%;
-  width: 50px;
+  width: 100%;
 }
 
 .sprite {
-  width: 50px;
+  width: 80px;
   height: 100%;
   padding: 0;
 }
 
 .name {
-  padding: 12.5px 10px;
+  padding: 35px 0;
   text-align: center;
-  font-size: 14px;
-  width: 150px;
+  width: 100%;
 }
 
 .types {
-  width: 250px;
+  width: 100%;
   height: 100%;
   justify-content: center;
   align-items: center;
-  padding: 12.5px;
+  padding: 35px;
   margin-left: 0;
 }
 
 .type {
   height: 100%;
-  width: 45px;
+  width: 40%;
   margin: 0px;
   padding: 0;
 }
@@ -81,19 +87,20 @@ th {
 }
 
 .type-text {
-  font-size: 12px;
+  padding: 3px;
+  font-size: 14px;
   text-align: center;
   margin: 0;
-  height: 17px;
+  height: 100%;
   border-radius: 10%;
 }
 
 .abilities {
-  width: 250px;
+  width: 100%;
   height: 100%;
   justify-content: center;
   align-items: center;
-  padding: 8px;
+  padding: 35px;
   margin-left: 0;
 }
 
@@ -108,7 +115,6 @@ th {
 }
 
 .ability-name {
-  font-size: 14px;
   width: fit-content;
   display: inline-flex;
   flex: none;
@@ -119,19 +125,13 @@ th {
   color: rgb(247, 134, 134);
 }
 
-.stats {
-  justify-content: center;
-  width: fit-content;
-  margin: 0;
-  padding: 12px;
-}
-
 .stat-num {
+  font-size: 20px;
+  justify-content: center;
   margin: 0;
-  padding: 12px;
+  padding: 35px;
   width: fit-content;
   text-align: center;
-  font-size: 14px;
 }
 
 .bug {
@@ -207,7 +207,6 @@ th {
 }
 
 .column-header {
-  font-size: 14px;
   text-align: center;
   padding: 12.5px;
 }
