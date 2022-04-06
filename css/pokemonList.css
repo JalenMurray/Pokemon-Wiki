@@ -77,7 +77,8 @@ td {
 
 .type {
   height: 100%;
-  width: 40%;
+  min-width: 35%;
+  width: fit-content;
   margin: 0px;
   padding: 0;
 }

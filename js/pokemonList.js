@@ -2,64 +2,7 @@
 let pokemon = [];
 
 import { createElement } from './modules/htmlUtils.js';
-import { getPokemon, formatID, capital } from './modules/Utils.js';
-
-class Content {
-  constructor(content) {
-    this.content = content;
-  }
-}
-
-class Attribute {
-  constructor(name, value) {
-    this.name = name;
-    this.value = value;
-  }
-}
-
-class Element {
-  constructor(type, attributes, content) {
-    this.type = type;
-    this.attributes = attributes;
-    this.content = content;
-  }
-}
-
-function htmlElementPrototypes() {
-  // Returns string for the HTML Content
-  Content.prototype.toString = function () {
-    return this.content.length > 0 ? this.content.join('') : '';
-  };
-
-  // Returns string for an HTML Attributes
-  Attribute.prototype.toString = function () {
-    return `${this.name}="${this.value}"`;
-  };
-
-  // Returns string for the attributes
-  Element.prototype.attString = function () {
-    return this.attributes.length > 0 ? ` ${this.attributes.join(' ')}` : '';
-  };
-
-  // Returns the string for an HTML Element
-  Element.prototype.toString = function () {
-    return `<${this.type}${this.attString()}>${this.content}</${this.type}>`;
-  };
-
-  // Adds classes to the Element
-  Element.prototype.addClass = function (classStr) {
-    let classAdded = false;
-    this.attributes.forEach(function (n) {
-      if (n.name == 'class') {
-        n.value += ` ${classStr}`;
-        classAdded = true;
-      }
-    });
-    if (!classAdded) this.attributes.push(new Attribute('class', classStr));
-  };
-}
-
-htmlElementPrototypes();
+import { getPokemon, formatID, capital, clearArray, getGenRange } from './modules/Utils.js';
 
 function getTypeElement(type) {
   let text = createElement('h5', `type-text ${type.name}`, [], [capital(type.name)]);
@@ -74,8 +17,7 @@ function getTypesElement(types) {
 }
 
 function getAbilityElement(ability) {
-  let text = createElement('h5', 'ability-name', [], [capital(ability.ability.name)]),
-    abilityClasses = new Attribute('class', 'ability');
+  let text = createElement('h5', 'ability-name', [], [capital(ability.ability.name)]);
 
   if (ability.is_hidden) text.addClass('ha');
   return createElement('div', 'ability', [], [text]);
@@ -83,8 +25,7 @@ function getAbilityElement(ability) {
 
 function getAbilitiesElement(abilities) {
   let a1 = getAbilityElement(abilities[0]),
-    content = abilities[1] ? [a1, getAbilityElement(abilities[1])] : [a1],
-    classes = new Attribute('class', 'abilities d-flex');
+    content = abilities[1] ? [a1, getAbilityElement(abilities[1])] : [a1];
   return createElement('div', 'abilities d-flex', [], content);
 }
 
@@ -96,8 +37,8 @@ function createHeader() {
   let idHeader = createElement('th', '', [], ['ID']),
     picHeader = createElement('th', '', [], ['Pic']),
     nameHeader = createElement('th', '', [], ['Name']),
-    typeHeader = createElement('th', 'd-none d-sm-table-cell', [], ['Types']),
-    abilityHeader = createElement('th', 'd-none d-md-table-cell', [], ['Abilities']),
+    typeHeader = createElement('th', 'd-none d-md-table-cell', [], ['Types']),
+    abilityHeader = createElement('th', 'd-none d-lg-table-cell', [], ['Abilities']),
     statClasses = 'd-none d-xl-table-cell justify-content-center',
     hpHeader = createElement('th', statClasses, [], ['HP']),
     attHeader = createElement('th', statClasses, [], ['Att']),
@@ -149,11 +90,11 @@ function createEntry(pokemon) {
 
   // Create Types Element
   let types = getTypesElement(pokemon.types),
-    typesCell = createElement('td', 'd-none d-sm-table-cell', [], [types]);
+    typesCell = createElement('td', 'd-none d-md-table-cell', [], [types]);
 
   // Create Abilities Element
   let abilities = getAbilitiesElement(pokemon.abilities),
-    abilitiesCell = createElement('td', 'd-none d-md-table-cell', [], [abilities]);
+    abilitiesCell = createElement('td', 'd-none d-lg-table-cell', [], [abilities]);
 
   // Create Stats Element
   let hp = getStatElement(pokemon.stats.hp),
@@ -167,33 +108,6 @@ function createEntry(pokemon) {
   let content = [idCell, spriteCell, nameCell, typesCell, abilitiesCell, hp, att, def, spAtt, spDef, speed];
 
   return createElement('tr', '', [['id', pokemon.id]], content);
-}
-
-function createHTMLString(elems) {
-  let str = '';
-  elems.forEach(function (n) {
-    str += n;
-  });
-  return str;
-}
-
-function clearArray(arr) {
-  while (arr.length > 0) {
-    arr.pop();
-  }
-}
-
-// Retrieves the range for each generation of pokemon
-function getGenRange(gen) {
-  if (gen == 'gen1') return [1, 151];
-  if (gen == 'gen2') return [152, 251];
-  if (gen == 'gen3') return [252, 386];
-  if (gen == 'gen4') return [387, 493];
-  if (gen == 'gen5') return [494, 649];
-  if (gen == 'gen6') return [650, 721];
-  if (gen == 'gen7') return [722, 809];
-  if (gen == 'gen8') return [810, 898];
-  return [1, 905];
 }
 
 async function createGenBtns() {
