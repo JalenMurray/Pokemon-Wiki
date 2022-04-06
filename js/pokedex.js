@@ -1,7 +1,15 @@
 'use strict';
 
 import { createElement } from './modules/htmlUtils.js';
-import { getPokemon, formatID, capital, clearArray, getGenRange, removeAllChildNodes } from './modules/Utils.js';
+import {
+  getPokemon,
+  formatID,
+  capital,
+  clearArray,
+  getGenRange,
+  removeAllChildNodes,
+  createHTMLString,
+} from './modules/Utils.js';
 
 function getBarColor(stat) {
   if (stat < 55) return 'rgb(212, 118, 17)';
@@ -191,14 +199,6 @@ async function createGenBtns() {
       document.getElementById('cards').innerHTML += createHTMLString(cards);
     });
   }
-}
-
-function createHTMLString(elems) {
-  let str = '';
-  elems.forEach(function (n) {
-    str += n;
-  });
-  return str;
 }
 
 async function main() {
