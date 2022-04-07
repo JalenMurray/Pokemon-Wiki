@@ -77,3 +77,92 @@ export function createHTMLString(elems) {
   });
   return str;
 }
+
+function sortByStat(pokes, stat, direction) {
+  if (direction == 'up') {
+    pokes.sort(function (x, y) {
+      if (x.stats[stat] < y.stats[stat]) return -1;
+      if (x.stats[stat] > y.stats[stat]) return 1;
+      return 0;
+    });
+  } else {
+    return pokes.sort(function (x, y) {
+      if (x.stats[stat] < y.stats[stat]) return 1;
+      if (x.stats[stat] > y.stats[stat]) return -1;
+      return 0;
+    });
+  }
+}
+
+export function sortPokes(pokes, by, direction) {
+  if (by == 'name') {
+    if (direction == 'up') {
+      pokes.sort(function (x, y) {
+        if (x.name < y.name) return -1;
+        if (x.name > y.name) return 1;
+        return 0;
+      });
+    } else {
+      return pokes.sort(function (x, y) {
+        if (x.name < y.name) return 1;
+        if (x.name > y.name) return -1;
+        return 0;
+      });
+      console.log(pokes);
+    }
+  }
+  if (by == 'hp') return sortByStat(pokes, 'hp', direction);
+  if (by == 'att') return sortByStat(pokes, 'att', direction);
+  if (by == 'def') return sortByStat(pokes, 'def', direction);
+  if (by == 'spAtt') return sortByStat(pokes, 'spAtt', direction);
+  if (by == 'spDef') return sortByStat(pokes, 'spDef', direction);
+  if (by == 'speed') return sortByStat(pokes, 'speed', direction);
+  if (by == 'ability') {
+    if (direction == 'up') {
+      pokes.sort(function (x, y) {
+        if (x.abilities[0].ability.name < y.abilities[0].ability.name) return -1;
+        if (x.abilities[0].ability.name > y.abilities[0].ability.name) return 1;
+        if (x.abilities[1] && y.abilities[1]) {
+          if (x.abilities[1].ability.name < y.abilities[1].ability.name) return -1;
+          if (x.abilities[1].ability.name > y.abilities[1].ability.name) return 1;
+          return 0;
+        }
+      });
+    } else {
+      return pokes.sort(function (x, y) {
+        if (x.abilities[0].ability.name < y.abilities[0].ability.name) return 1;
+        if (x.abilities[0].ability.name > y.abilities[0].ability.name) return -1;
+        return 0;
+      });
+    }
+  }
+  if (by == 'type') {
+    if (direction == 'up') {
+      pokes.sort(function (x, y) {
+        if (x.types.t1.name < y.types.t1.name) return -1;
+        if (x.types.t1.name > y.types.t1.name) return 1;
+        if (x.types.t2 && y.types.t2) {
+          if (x.types.t2.name < y.types.t2.name) return -1;
+          if (x.types.t2.name > y.types.t2.name) return 1;
+          return 0;
+        }
+        if (x.types.t2 && !y.types.t2) return 1;
+        if (!x.types.t2 && y.types.t2) return -1;
+        return 0;
+      });
+    } else {
+      return pokes.sort(function (x, y) {
+        if (x.types.t1.name < y.types.t1.name) return 1;
+        if (x.types.t1.name > y.types.t1.name) return -1;
+        if (x.types.t2 && y.types.t2) {
+          if (x.types.t2.name < y.types.t2.name) return 1;
+          if (x.types.t2.name > y.types.t2.name) return -1;
+          return 0;
+        }
+        if (x.types.t2 && !y.types.t2) return -1;
+        if (!x.types.t2 && y.types.t2) return 1;
+        return 0;
+      });
+    }
+  }
+}

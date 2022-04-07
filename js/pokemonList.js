@@ -2,53 +2,52 @@
 let pokemon = [];
 
 import { createElement } from './modules/htmlUtils.js';
-import { getPokemon, formatID, capital, clearArray, getGenRange } from './modules/Utils.js';
+import { getPokemon, formatID, capital, clearArray, getGenRange, sortPokes } from './modules/Utils.js';
 
 function getTypeElement(type) {
-  let text = createElement('h5', `type-text ${type.name}`, [], [capital(type.name)]);
-  return createElement('div', 'type row', [], [text]);
+  let text = createElement('h5', `type-text ${type.name}`, [capital(type.name)]);
+  return createElement('div', 'type row', [text]);
 }
 
 function getTypesElement(types) {
   let t1 = getTypeElement(types.t1),
     content = types.t2 ? [t1, getTypeElement(types.t2)] : [t1];
 
-  return createElement('div', 'types row', [], content);
+  return createElement('div', 'types row', content);
 }
 
 function getAbilityElement(ability) {
-  let text = createElement('h5', 'ability-name', [], [capital(ability.ability.name)]);
+  let text = createElement('h5', 'ability-name', [capital(ability.ability.name)]);
 
   if (ability.is_hidden) text.addClass('ha');
-  return createElement('div', 'ability', [], [text]);
+  return createElement('div', 'ability', [text]);
 }
 
 function getAbilitiesElement(abilities) {
   let a1 = getAbilityElement(abilities[0]),
     content = abilities[1] ? [a1, getAbilityElement(abilities[1])] : [a1];
-  return createElement('div', 'abilities d-flex', [], content);
+  return createElement('div', 'abilities d-flex', content);
 }
 
 function getStatElement(stat) {
-  return createElement('td', 'd-none d-xl-table-cell stat-num', [], [stat]);
+  return createElement('td', 'd-none d-xl-table-cell stat-num', [stat]);
 }
 
 function createHeader() {
-  let idHeader = createElement('th', '', [], ['ID']),
-    picHeader = createElement('th', '', [], ['Pic']),
-    nameHeader = createElement('th', '', [], ['Name']),
-    typeHeader = createElement('th', 'd-none d-md-table-cell', [], ['Types']),
-    abilityHeader = createElement('th', 'd-none d-lg-table-cell', [], ['Abilities']),
+  let idHeader = createElement('th', ['ID']),
+    picHeader = createElement('th', ['Pic']),
+    nameHeader = createElement('th', ['Name']),
+    typeHeader = createElement('th', 'd-none d-md-table-cell', ['Types']),
+    abilityHeader = createElement('th', 'd-none d-lg-table-cell', ['Abilities']),
     statClasses = 'd-none d-xl-table-cell justify-content-center',
-    hpHeader = createElement('th', statClasses, [], ['HP']),
-    attHeader = createElement('th', statClasses, [], ['Att']),
-    defHeader = createElement('th', statClasses, [], ['Def']),
-    spAttHeader = createElement('th', statClasses, [], ['Sp Att']),
-    spDefHeader = createElement('th', statClasses, [], ['Sp Def']),
-    speedHeader = createElement('th', statClasses, [], ['Speed']),
+    hpHeader = createElement('th', statClasses, ['HP']),
+    attHeader = createElement('th', statClasses, ['Att']),
+    defHeader = createElement('th', statClasses, ['Def']),
+    spAttHeader = createElement('th', statClasses, ['Sp Att']),
+    spDefHeader = createElement('th', statClasses, ['Sp Def']),
+    speedHeader = createElement('th', statClasses, ['Speed']),
     row = createElement(
       'tr',
-      '',
       [],
       [
         idHeader,
@@ -64,13 +63,13 @@ function createHeader() {
         speedHeader,
       ]
     );
-  return createElement('thead', '', [], [row]);
+  return createElement('thead', [row]);
 }
 
 function createEntry(pokemon) {
   // Create ID Element
-  let id = createElement('h5', 'id', [], [formatID(pokemon.id)]),
-    idCell = createElement('th', '', [], [id]);
+  let id = createElement('h5', 'id', [formatID(pokemon.id)]),
+    idCell = createElement('th', [id]);
 
   // Create Sprite Element
   let sprite = createElement(
@@ -82,19 +81,19 @@ function createEntry(pokemon) {
       ],
       []
     ),
-    spriteCell = createElement('td', '', [], [sprite]);
+    spriteCell = createElement('td', [sprite]);
 
   // Create Name Element
-  let name = createElement('h5', 'name', [], [capital(pokemon.name)]),
-    nameCell = createElement('td', '', [], [name]);
+  let name = createElement('h5', 'name', [capital(pokemon.name)]),
+    nameCell = createElement('td', [name]);
 
   // Create Types Element
   let types = getTypesElement(pokemon.types),
-    typesCell = createElement('td', 'd-none d-md-table-cell', [], [types]);
+    typesCell = createElement('td', 'd-none d-md-table-cell', [types]);
 
   // Create Abilities Element
   let abilities = getAbilitiesElement(pokemon.abilities),
-    abilitiesCell = createElement('td', 'd-none d-lg-table-cell', [], [abilities]);
+    abilitiesCell = createElement('td', 'd-none d-lg-table-cell', [abilities]);
 
   // Create Stats Element
   let hp = getStatElement(pokemon.stats.hp),
@@ -107,12 +106,11 @@ function createEntry(pokemon) {
   // Create Entry
   let content = [idCell, spriteCell, nameCell, typesCell, abilitiesCell, hp, att, def, spAtt, spDef, speed];
 
-  return createElement('tr', '', [['id', pokemon.id]], content);
+  return createElement('tr', [['id', pokemon.id]], content);
 }
 
 async function createGenBtns() {
   for (let i = 1; i < 9; i++) {
-    let pokes = [];
     let gen = `gen${i}`;
     let range = getGenRange(gen);
     let id = `${gen}-btn`;
@@ -121,7 +119,6 @@ async function createGenBtns() {
     genBtn.addEventListener('click', async function () {
       document.getElementById('loading').classList.remove('d-none');
       document.getElementById('list').innerHTML = '';
-      console.log(document.getElementById('list').innerHTML);
       clearArray(entries);
       pokemon = await getPokemon(range);
       pokemon.forEach(function (n) {
@@ -130,8 +127,8 @@ async function createGenBtns() {
       });
 
       let header = createHeader(),
-        body = createElement('tbody', '', [], entries),
-        table = createElement('table', 'table table-dark table-striped table-bordered table-hover', [], [header, body]);
+        body = createElement('tbody', entries),
+        table = createElement('table', 'table table-dark table-striped table-bordered table-hover', [header, body]);
 
       document.getElementById('loading').classList.add('d-none');
       document.getElementById('list').innerHTML = table.toString();
@@ -143,14 +140,16 @@ async function main() {
   createGenBtns();
   let entries = [];
   pokemon = await getPokemon([1, 898]);
+  sortPokes(pokemon, 'type', 'down');
+  console.log(pokemon);
   pokemon.forEach(function (n) {
     let entry = createEntry(n);
     entries.push(entry);
   });
 
   let header = createHeader(),
-    body = createElement('tbody', '', [], entries),
-    table = createElement('table', 'table table-dark table-striped table-bordered table-hover', [], [header, body]);
+    body = createElement('tbody', '', entries),
+    table = createElement('table', 'table table-dark table-striped table-bordered table-hover', [header, body]);
 
   document.getElementById('loading').classList.add('d-none');
   document.getElementById('list').innerHTML = table.toString();

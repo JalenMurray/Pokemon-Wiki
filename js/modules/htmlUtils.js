@@ -65,16 +65,32 @@ function getContent(content) {
   return new Content(content);
 }
 
-export function createElement(type, classList, attributeList, contentList) {
-  let classes,
-    attributes = [],
-    content = new Content(contentList);
-
-  if (classList != '') classes = getClasses(classList);
-
+function getAttributes(attributeList) {
+  let attributes = [];
   attributeList.forEach(function (n) {
     attributes.push(new Attribute(n[0], n[1]));
   });
+  return attributes;
+}
 
-  return classes ? new Element(type, [classes, ...attributes], content) : new Element(type, attributes, content);
+export function createElement(...args) {
+  let type = args[0];
+  if (args.length == 1) return new Element(type, [], new Content([]));
+  if (args.length == 2) {
+    if (typeof args[1] == 'string') return new Element(type, getClasses(args[1]), getContent([]));
+    if (typeof args[1][1] == 'object') {
+      return new Element(type, [new Attribute(args[1][0], args[1][1])], getContent([]));
+    }
+    return new Element(type, [], new Content(args[1]));
+  }
+  if (args.length == 3) {
+    if (typeof args[1] == 'string') {
+      return new Element(type, [getClasses(args[1])], new Content(args[2]));
+    }
+    return new Element(type, [new Attribute(args[1][0], args[1][1])], new Content(args[2]));
+  }
+  let classes = getClasses(args[1]),
+    attributes = getAttributes(args[2]),
+    content = new Content(args[3]);
+  return new Element(type, [classes, ...attributes], content);
 }
