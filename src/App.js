@@ -2,7 +2,8 @@ import { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
-import CardList from "./components/card-list/card-list.component.jsx";
+import CardList from "./components/pokedex-components/card-list/card-list.component.jsx";
+import PokemonEntryList from "./components/pokemon-list-components/pokemon-entry-list/pokemon-entry-list.components";
 
 class App extends Component {
   constructor() {
@@ -16,7 +17,7 @@ class App extends Component {
   async getPokemon() {
     let allPokemon = [];
     try {
-      for (let i = 1; i < 20; i++) {
+      for (let i = 1; i < 152; i++) {
         const pokemonResponse = await fetch(
           `https://pokeapi.co/api/v2/pokemon/${i}`
         );
@@ -83,7 +84,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <CardList pokemonList={this.state.pokemonList} />
+        <PokemonEntryList pokemonList={this.state.pokemonList} />
+        {/* <CardList pokemonList={this.state.pokemonList} /> */}
       </div>
     );
   }
