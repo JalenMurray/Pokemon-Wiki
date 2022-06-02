@@ -1,0 +1,12 @@
+.stats {
+  height: 120px;
+  align-items: center;
+  margin-top: 0;
+}
+
+.stat-word {
+  width: fit-content;
+  font-size: 18px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
