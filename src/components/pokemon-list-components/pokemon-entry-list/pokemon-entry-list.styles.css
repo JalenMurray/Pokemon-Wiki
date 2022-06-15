@@ -1,0 +1,19 @@
+table {
+  border-collapse: collapse;
+}
+
+th {
+  text-align: center;
+}
+
+td {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.column-header {
+  text-align: center;
+  padding: 12.5px;
+}

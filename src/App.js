@@ -4,6 +4,7 @@ import "./App.css";
 
 import CardList from "./components/pokedex-components/card-list/card-list.component.jsx";
 import PokemonEntryList from "./components/pokemon-list-components/pokemon-entry-list/pokemon-entry-list.components";
+import SearchBox from "./components/search-box/search-box.component";
 
 class App extends Component {
   constructor() {
@@ -11,6 +12,7 @@ class App extends Component {
 
     this.state = {
       pokemonList: [],
+      searchField: "",
     };
   }
 
@@ -81,11 +83,26 @@ class App extends Component {
     });
   }
 
+  onSearchChange = (event) => {
+    let searchField = event.target.value.toLocaleLowerCase();
+    console.log(searchField);
+    this.setState(() => {
+      return { searchField };
+    });
+  };
+
   render() {
+    const { pokemonList, searchField } = this.state;
+
+    const filteredPokemon = pokemonList.filter((pokemon) =>
+      pokemon.name.toLocaleLowerCase().includes(searchField)
+    );
+
     return (
       <div className="App">
-        <PokemonEntryList pokemonList={this.state.pokemonList} />
-        {/* <CardList pokemonList={this.state.pokemonList} /> */}
+        <SearchBox onChangeHandler={this.onSearchChange} />
+        <PokemonEntryList pokemonList={filteredPokemon} />
+        {/* <CardList pokemonList={filteredPokemon} /> */}
       </div>
     );
   }
