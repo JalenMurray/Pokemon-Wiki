@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 async function getJSON(path) {
   const response = await fetch(path);
@@ -14,7 +14,7 @@ export async function getPokemon(range) {
       id: id,
       name: pokemon.name,
       speciesURL: pokemon.species.url,
-      thumbnail: pokemon.sprites.other['official-artwork'].front_default,
+      thumbnail: pokemon.sprites.other["official-artwork"].front_default,
       sprite: pokemon.sprites.front_default,
       abilities: pokemon.abilities,
       types: {
@@ -35,9 +35,7 @@ export async function getPokemon(range) {
   return allPokemon;
 }
 
-export function capital(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
+export function capital(str) {}
 
 export function formatID(id) {
   if (id < 10) return `00${id}`;
@@ -59,19 +57,19 @@ export function clearArray(arr) {
 
 // Retrieves the range for each generation of pokemon
 export function getGenRange(gen) {
-  if (gen == 'gen1') return [1, 151];
-  if (gen == 'gen2') return [152, 251];
-  if (gen == 'gen3') return [252, 386];
-  if (gen == 'gen4') return [387, 493];
-  if (gen == 'gen5') return [494, 649];
-  if (gen == 'gen6') return [650, 721];
-  if (gen == 'gen7') return [722, 809];
-  if (gen == 'gen8') return [810, 898];
+  if (gen == "gen1") return [1, 151];
+  if (gen == "gen2") return [152, 251];
+  if (gen == "gen3") return [252, 386];
+  if (gen == "gen4") return [387, 493];
+  if (gen == "gen5") return [494, 649];
+  if (gen == "gen6") return [650, 721];
+  if (gen == "gen7") return [722, 809];
+  if (gen == "gen8") return [810, 898];
   return [1, 905];
 }
 
 export function createHTMLString(elems) {
-  let str = '';
+  let str = "";
   elems.forEach(function (n) {
     str += n;
   });
@@ -79,7 +77,7 @@ export function createHTMLString(elems) {
 }
 
 function sortByStat(pokes, stat, direction) {
-  if (direction == 'up') {
+  if (direction == "up") {
     pokes.sort(function (x, y) {
       if (x.stats[stat] < y.stats[stat]) return -1;
       if (x.stats[stat] > y.stats[stat]) return 1;
@@ -95,8 +93,8 @@ function sortByStat(pokes, stat, direction) {
 }
 
 export function sortPokes(pokes, by, direction) {
-  if (by == 'name') {
-    if (direction == 'up') {
+  if (by == "name") {
+    if (direction == "up") {
       pokes.sort(function (x, y) {
         if (x.name < y.name) return -1;
         if (x.name > y.name) return 1;
@@ -111,33 +109,37 @@ export function sortPokes(pokes, by, direction) {
       console.log(pokes);
     }
   }
-  if (by == 'hp') return sortByStat(pokes, 'hp', direction);
-  if (by == 'att') return sortByStat(pokes, 'att', direction);
-  if (by == 'def') return sortByStat(pokes, 'def', direction);
-  if (by == 'spAtt') return sortByStat(pokes, 'spAtt', direction);
-  if (by == 'spDef') return sortByStat(pokes, 'spDef', direction);
-  if (by == 'speed') return sortByStat(pokes, 'speed', direction);
-  if (by == 'ability') {
-    if (direction == 'up') {
+  if (by == "hp") return sortByStat(pokes, "hp", direction);
+  if (by == "att") return sortByStat(pokes, "att", direction);
+  if (by == "def") return sortByStat(pokes, "def", direction);
+  if (by == "spAtt") return sortByStat(pokes, "spAtt", direction);
+  if (by == "spDef") return sortByStat(pokes, "spDef", direction);
+  if (by == "speed") return sortByStat(pokes, "speed", direction);
+  if (by == "ability") {
+    if (direction == "up") {
       pokes.sort(function (x, y) {
-        if (x.abilities[0].ability.name < y.abilities[0].ability.name) return -1;
+        if (x.abilities[0].ability.name < y.abilities[0].ability.name)
+          return -1;
         if (x.abilities[0].ability.name > y.abilities[0].ability.name) return 1;
         if (x.abilities[1] && y.abilities[1]) {
-          if (x.abilities[1].ability.name < y.abilities[1].ability.name) return -1;
-          if (x.abilities[1].ability.name > y.abilities[1].ability.name) return 1;
+          if (x.abilities[1].ability.name < y.abilities[1].ability.name)
+            return -1;
+          if (x.abilities[1].ability.name > y.abilities[1].ability.name)
+            return 1;
           return 0;
         }
       });
     } else {
       return pokes.sort(function (x, y) {
         if (x.abilities[0].ability.name < y.abilities[0].ability.name) return 1;
-        if (x.abilities[0].ability.name > y.abilities[0].ability.name) return -1;
+        if (x.abilities[0].ability.name > y.abilities[0].ability.name)
+          return -1;
         return 0;
       });
     }
   }
-  if (by == 'type') {
-    if (direction == 'up') {
+  if (by == "type") {
+    if (direction == "up") {
       pokes.sort(function (x, y) {
         if (x.types.t1.name < y.types.t1.name) return -1;
         if (x.types.t1.name > y.types.t1.name) return 1;

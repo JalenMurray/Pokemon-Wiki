@@ -1,0 +1,26 @@
+.abilities {
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto;
+  width: fit-content;
+}
+
+.ability-keyword {
+  width: fit-content;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 12px;
+  padding: 0;
+}
+
+.ability {
+  display: inline-flex;
+  flex: none;
+  width: fit-content;
+  font-size: 12px;
+  border: solid 1px black;
+}
+
+.HA {
+  color: rgb(148, 30, 30);
+}

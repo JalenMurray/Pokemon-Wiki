@@ -1,0 +1,26 @@
+.entry-abilities {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 35px;
+  margin-left: 0;
+}
+
+.entry-ability {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.entry-ability + .entry-ability {
+  margin-left: 7px;
+}
+
+.entry-ability-name {
+  width: fit-content;
+  display: inline-flex;
+  flex: none;
+  text-align: center;
+  font-size: 15px;
+}

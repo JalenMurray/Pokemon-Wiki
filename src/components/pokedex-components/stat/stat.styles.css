@@ -1,0 +1,52 @@
+.stat-text {
+  font-size: 16px;
+}
+
+.stat-bar {
+  height: 100%;
+  margin-right: auto;
+  margin-left: 30px;
+}
+
+.stat {
+  height: 18px;
+  margin-bottom: 1px;
+}
+
+.stat-num {
+  font-size: 12px;
+  position: absolute;
+  margin-left: 70px;
+  margin-top: 0;
+  font-weight: bold;
+}
+
+.hp-bar {
+  background-color: var(--hp-bar);
+  width: calc(var(--hp) * 0.5pt);
+}
+
+.att-bar {
+  background-color: var(--att-bar);
+  width: calc(var(--att) * 0.5pt);
+}
+
+.def-bar {
+  background-color: var(--def-bar);
+  width: calc(var(--def) * 0.5pt);
+}
+
+.spatt-bar {
+  background-color: var(--spdef-bar);
+  width: calc(var(--spatt) * 0.5pt);
+}
+
+.spdef-bar {
+  background-color: var(--spatt-bar);
+  width: calc(var(--spdef) * 0.5pt);
+}
+
+.speed-bar {
+  background-color: var(--speed-bar);
+  width: calc(var(--speed) * 0.5pt);
+}
