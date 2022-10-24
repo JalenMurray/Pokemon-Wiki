@@ -3,45 +3,6 @@
   margin: 0;
 }
 
-.loading-screen {
-  height: 100vh;
-}
-
-.loader {
-  margin: auto;
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #3498db; /* Blue */
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-#id-306 {
-  --card-color: rgb(147, 148, 158);
-  --hp: 70;
-  --att: 110;
-  --def: 180;
-  --spatt: 60;
-  --spdef: 60;
-  --speed: 50;
-  --hp-bar: rgb(212, 196, 17);
-  --att-bar: rgb(160, 212, 17);
-  --def-bar: rgb(43, 212, 17);
-  --spatt-bar: rgb(212, 164, 17);
-  --spdef-bar: rgb(212, 164, 17);
-  --speed-bar: rgb(212, 118, 17);
-}
-
 #cards {
   display: flex;
   justify-content: center;
