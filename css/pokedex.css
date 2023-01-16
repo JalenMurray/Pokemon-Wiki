@@ -1,176 +1,182 @@
 * {
-  box-sizing: border-box;
-  margin: 0;
+    box-sizing: border-box;
+    margin: 0;
 }
 
 #cards {
-  display: flex;
-  justify-content: center;
-  height: fit-content;
+    display: flex;
+    justify-content: center;
+    height: fit-content;
 }
 
 .card {
-  display: flex;
-  background-color: var(--card-color);
-  height: 450px;
-  width: 380px;
-  border: solid 3px black;
-  border-radius: 5%;
-  margin: 10px;
+    display: flex;
+    background-color: var(--card-color);
+    height: 450px;
+    width: 380px;
+    border: solid 3px black;
+    border-radius: 5%;
+    margin: 10px;
 }
 
 .row {
-  height: 30px;
+    height: 30px;
 }
 
 .name {
-  width: fit-content;
-  margin-right: auto;
-  margin-left: 18px;
+    width: fit-content;
+    margin-right: auto;
+    margin-left: 18px;
 }
 
 .types {
-  width: fit-content;
-  height: 100%;
-  padding: 0;
-  margin-left: auto;
-  margin-right: 25px;
+    width: fit-content;
+    height: 100%;
+    padding: 0;
+    margin-left: auto;
+    margin-right: 25px;
 }
 
 .type-pic {
-  width: 30px;
-  height: 30px;
+    width: 30px;
+    height: 30px;
 }
 
 .thumbnail {
-  margin: 5px auto;
-  width: 285px;
-  height: 200px;
-  background-color: rgb(138, 138, 138);
-  border: solid black 2px;
+    margin: 5px auto;
+    width: 285px;
+    height: 200px;
+    background-color: rgb(138, 138, 138);
+    border: solid black 2px;
 }
 
 .evo-chain {
-  margin: auto;
-  align-items: center;
-  width: fit-content;
+    margin: auto;
+    align-items: center;
+    width: fit-content;
 }
 
 .evo-pic {
-  padding: 0px;
-  height: 55px;
+    padding: 0px;
+    height: 55px;
 }
 
 .arrow {
-  padding: 0px;
-  height: 60px;
+    padding: 0px;
+    height: 60px;
 }
 
 .evo-level-1 {
-  position: absolute;
-  color: white;
-  left: 80px;
-  top: 262px;
-  font-size: 14px;
+    position: absolute;
+    color: white;
+    left: 80px;
+    top: 262px;
+    font-size: 14px;
 }
 
 .evo-level-2 {
-  position: absolute;
-  color: white;
-  left: 220px;
-  top: 262px;
-  font-size: 14px;
+    position: absolute;
+    color: white;
+    left: 220px;
+    top: 262px;
+    font-size: 14px;
 }
 
 .abilities {
-  justify-content: center;
-  align-items: center;
-  margin: 10px auto;
-  width: fit-content;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+    width: fit-content;
 }
 
 .ability-name {
-  width: fit-content;
-  margin-left: 5px;
-  margin-right: 5px;
-  font-size: 12px;
-  padding: 0;
+    width: fit-content;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 12px;
+    padding: 0;
 }
 
 .ability {
-  display: inline-flex;
-  flex: none;
-  width: fit-content;
-  font-size: 12px;
-  border: solid 1px black;
+    display: inline-flex;
+    flex: none;
+    width: fit-content;
+    font-size: 12px;
+    border: solid 1px black;
 }
 
 .HA {
-  color: rgb(148, 30, 30);
+    color: rgb(148, 30, 30);
 }
 
 .stats {
-  height: 120px;
-  align-items: center;
-  margin-top: 0;
+    height: 120px;
+    align-items: center;
+    margin-top: 0;
 }
 
 .stat-word {
-  width: fit-content;
-  font-size: 18px;
-  margin-top: auto;
-  margin-bottom: auto;
+    width: fit-content;
+    font-size: 18px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .stat-text {
-  font-size: 16px;
+    font-size: 16px;
 }
 
 .stat-bar {
-  height: 100%;
-  margin-right: auto;
-  margin-left: 30px;
+    height: 100%;
+    margin-right: auto;
+    margin-left: 30px;
 }
 
 .stat {
-  height: 18px;
-  margin-bottom: 1px;
+    height: 18px;
+    margin-bottom: 1px;
 }
 
 .stat-num {
-  font-size: 12px;
-  position: absolute;
-  margin-left: 70px;
-  margin-top: 0;
-  font-weight: bold;
+    font-size: 12px;
+    position: absolute;
+    margin-left: 70px;
+    margin-top: 0;
+    font-weight: bold;
 }
 
 .hp-bar {
-  background-color: var(--hp-bar);
-  width: calc(var(--hp) * 0.5pt);
+    background-color: var(--hp-bar);
+    width: calc(var(--hp) * 0.5pt);
 }
 
 .att-bar {
-  background-color: var(--att-bar);
-  width: calc(var(--att) * 0.5pt);
+    background-color: var(--att-bar);
+    width: calc(var(--att) * 0.5pt);
 }
 
 .def-bar {
-  background-color: var(--def-bar);
-  width: calc(var(--def) * 0.5pt);
+    background-color: var(--def-bar);
+    width: calc(var(--def) * 0.5pt);
 }
 
 .spatt-bar {
-  background-color: var(--spdef-bar);
-  width: calc(var(--spatt) * 0.5pt);
+    background-color: var(--spdef-bar);
+    width: calc(var(--spatt) * 0.5pt);
 }
 
 .spdef-bar {
-  background-color: var(--spatt-bar);
-  width: calc(var(--spdef) * 0.5pt);
+    background-color: var(--spatt-bar);
+    width: calc(var(--spdef) * 0.5pt);
 }
 
 .speed-bar {
-  background-color: var(--speed-bar);
-  width: calc(var(--speed) * 0.5pt);
+    background-color: var(--speed-bar);
+    width: calc(var(--speed) * 0.5pt);
+}
+
+#pages {
+    padding-left: 45%;
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
